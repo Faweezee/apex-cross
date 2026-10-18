@@ -11,6 +11,7 @@ from app.routes.agent_routes import router as agent_router
 from app.routes.fx_routes import router as fx_router
 from app.routes.invoice_routes import router as invoice_router
 from app.routes.security_routes import router as security_router
+from app.routes.transfer_routes import router as transfer_router
 from app.schemas import (
     AuditRecord,
     CurrencyEnum,
@@ -54,6 +55,7 @@ app.include_router(agent_router)
 app.include_router(fx_router)
 app.include_router(invoice_router)
 app.include_router(security_router)
+app.include_router(transfer_router)
 
 
 @app.get("/api/health", tags=["Health"])
