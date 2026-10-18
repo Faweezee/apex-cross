@@ -40,8 +40,8 @@
 * **Skill Focus:** `tdd`, `codebase-design`
 * **Input Context:** `backend/app/schemas.py`
 * **Tasks:**
-  - [ ] Write failing unit test `backend/tests/test_fx_calculator.py` testing cross-currency conversions and fee savings.
-  - [ ] Implement `backend/app/tools/fx_calculator.py`:
+  - [x] Write failing unit test `backend/tests/test_fx_calculator.py` testing cross-currency conversions and fee savings.
+  - [x] Implement `backend/app/tools/fx_calculator.py`:
     - Real-time exchange rate fetching with local JSON fallback.
     - Deterministic corridor comparator (Standard Bank Wire vs. Direct Clearing vs. Wise).
     - Precise fee and arrival time calculation without LLM math.

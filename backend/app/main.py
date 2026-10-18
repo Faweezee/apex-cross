@@ -6,6 +6,7 @@ from fastapi.openapi.utils import get_openapi
 from pydantic import TypeAdapter
 
 from app.config import settings
+from app.routes.fx_routes import router as fx_router
 from app.schemas import (
     AuditRecord,
     CurrencyEnum,
@@ -29,6 +30,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(fx_router)
 
 
 @app.get("/api/health", tags=["Health"])
