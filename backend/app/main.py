@@ -1,12 +1,14 @@
 """FastAPI application entrypoint for ApexCross."""
 from typing import Any, Dict
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
+from fastapi.responses import JSONResponse
 from pydantic import TypeAdapter
 
 from app.config import settings
 from app.routes.fx_routes import router as fx_router
+from app.routes.security_routes import router as security_router
 from app.schemas import (
     AuditRecord,
     CurrencyEnum,
@@ -16,6 +18,7 @@ from app.schemas import (
     SecurityTier,
     UniversityInvoice,
 )
+from app.security.firewall import SecurityException
 
 app = FastAPI(
     title=settings.app_name,
@@ -31,7 +34,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.exception_handler(SecurityException)
+async def security_exception_handler(request: Request, exc: SecurityException) -> JSONResponse:
+    """Fail-closed exception handler returning HTTP 403 on detected security violations."""
+    return JSONResponse(
+        status_code=403,
+        content={
+            "status": "BLOCKED",
+            "error": "SecurityException",
+            "reason": exc.reason,
+        },
+    )
+
+
 app.include_router(fx_router)
+app.include_router(security_router)
 
 
 @app.get("/api/health", tags=["Health"])

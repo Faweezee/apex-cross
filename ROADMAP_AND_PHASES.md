@@ -73,9 +73,9 @@
 * **Skill Focus:** `security-scanner`, `tdd`
 * **Input Context:** 30% Security & Compliance judging rubric
 * **Tasks:**
-  - [ ] Port `backend/app/security/firewall.py` from `INITIAL_ARTIFACTS.md`.
-  - [ ] Port `backend/tests/test_security_firewall.py` with 15 adversarial injection test cases.
-  - [ ] Implement heuristic & regex regex patterns blocking prompt overrides, delimiter leaks, and unauthorized wire calls.
+  - [x] Port `backend/app/security/firewall.py` from `INITIAL_ARTIFACTS.md`.
+  - [x] Port `backend/tests/test_security_firewall.py` with 15 adversarial injection test cases.
+  - [x] Implement heuristic & regex regex patterns blocking prompt overrides, delimiter leaks, and unauthorized wire calls.
 * **Definition of Done:**
   ```bash
   pytest backend/tests/test_security_firewall.py
