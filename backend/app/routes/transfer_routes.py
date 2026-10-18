@@ -144,8 +144,26 @@ async def execute_micro_conversion(payload: MicroConvertRequest) -> MicroConvert
     wallet[src_key] = src_after
     wallet[tgt_key] = tgt_after
 
+    conv_id = f"conv-{uuid.uuid4().hex[:8]}"
+    from app.routes.audit_routes import audit_logger
+
+    audit_logger.log_event(
+        user_id=payload.user_id,
+        action_type="TIER2_MICRO_CONVERT",
+        security_tier=SecurityTier.TIER_2_CONFIRMATION,
+        plan_id=conv_id,
+        payload={
+            "source_currency": src_key,
+            "target_currency": tgt_key,
+            "source_amount": _round_cents(dec_source_amount),
+            "converted_target_amount": _round_cents(converted_target),
+        },
+        signature_verified=True,
+        status="COMPLETED",
+    )
+
     return MicroConvertResponse(
-        conversion_id=f"conv-{uuid.uuid4().hex[:8]}",
+        conversion_id=conv_id,
         status="COMPLETED",
         security_tier=SecurityTier.TIER_2_CONFIRMATION,
         biometric_required=False,

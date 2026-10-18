@@ -65,6 +65,22 @@ async def verify_reauth_and_execute_wire(
         currency=payload.currency,
         student_id=payload.student_id,
     )
+    from app.routes.audit_routes import audit_logger
+
+    audit_logger.log_event(
+        user_id=payload.userId,
+        action_type="TIER3_WIRE_SETTLED",
+        security_tier=SecurityTier.TIER_3_BIOMETRIC,
+        plan_id=payload.plan_id,
+        payload={
+            "reference_id": receipt.reference_id,
+            "transaction_hash": receipt.transaction_hash,
+            "amount": receipt.amount,
+            "currency": receipt.currency.value,
+        },
+        signature_verified=True,
+        status="SETTLED",
+    )
     return WebAuthnVerifyResponse(
         verified=True,
         security_tier=SecurityTier.TIER_3_BIOMETRIC,

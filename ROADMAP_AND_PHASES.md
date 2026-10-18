@@ -111,7 +111,7 @@
   - [x] Implement `backend/app/security/webauthn_service.py`:
     - Generate cryptographic challenge with `allowCredentials` restricted to user.
     - Verify assertion response against stored user credentials.
-  - [ ] Implement `backend/app/security/audit_logger.py`:
+  - [x] Implement `backend/app/security/audit_logger.py`:
     - SQLite append-only log with SHA-256 hash chaining.
   - [x] Expose endpoints `POST /api/auth/reauth/options` and `POST /api/auth/reauth/verify`.
 * **Definition of Done:**

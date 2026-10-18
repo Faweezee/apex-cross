@@ -8,6 +8,7 @@ from pydantic import TypeAdapter
 
 from app.config import settings
 from app.routes.agent_routes import router as agent_router
+from app.routes.audit_routes import audit_logger, router as audit_router
 from app.routes.auth_routes import router as auth_router
 from app.routes.fx_routes import router as fx_router
 from app.routes.invoice_routes import router as invoice_router
@@ -41,7 +42,16 @@ app.add_middleware(
 
 @app.exception_handler(SecurityException)
 async def security_exception_handler(request: Request, exc: SecurityException) -> JSONResponse:
-    """Fail-closed exception handler returning HTTP 403 on detected security violations."""
+    """Fail-closed exception handler logging to immutable audit trail and returning HTTP 403."""
+    audit_logger.log_event(
+        user_id="security-gateway",
+        action_type="SECURITY_EXCEPTION_BLOCKED",
+        security_tier=SecurityTier.TIER_3_BIOMETRIC,
+        plan_id="blocked",
+        payload={"path": str(request.url.path), "reason": exc.reason},
+        signature_verified=False,
+        status="BLOCKED",
+    )
     return JSONResponse(
         status_code=403,
         content={
@@ -53,6 +63,7 @@ async def security_exception_handler(request: Request, exc: SecurityException) -
 
 
 app.include_router(agent_router)
+app.include_router(audit_router)
 app.include_router(auth_router)
 app.include_router(fx_router)
 app.include_router(invoice_router)
