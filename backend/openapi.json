@@ -1,0 +1,336 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ApexCross",
+    "description": "Autonomous Cross-Border Financial Participant Agent API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Health Check",
+        "description": "Return service health status.",
+        "operationId": "health_check_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Check Api Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SecurityTier": {
+        "enum": [
+          "TIER_1_AUTONOMOUS",
+          "TIER_2_CONFIRMATION",
+          "TIER_3_BIOMETRIC"
+        ],
+        "title": "SecurityTier",
+        "type": "string"
+      },
+      "CurrencyEnum": {
+        "enum": [
+          "USD",
+          "CNY",
+          "HKD",
+          "AUD",
+          "SGD"
+        ],
+        "title": "CurrencyEnum",
+        "type": "string"
+      },
+      "RemittanceRoute": {
+        "properties": {
+          "rail_name": {
+            "description": "e.g. Standard SWIFT, Direct Clearing, Wise Corridor",
+            "title": "Rail Name",
+            "type": "string"
+          },
+          "exchange_rate": {
+            "title": "Exchange Rate",
+            "type": "number"
+          },
+          "source_currency": {
+            "$ref": "#/components/schemas/CurrencyEnum"
+          },
+          "source_amount": {
+            "title": "Source Amount",
+            "type": "number"
+          },
+          "target_currency": {
+            "$ref": "#/components/schemas/CurrencyEnum"
+          },
+          "target_amount": {
+            "title": "Target Amount",
+            "type": "number"
+          },
+          "total_fee_usd": {
+            "title": "Total Fee Usd",
+            "type": "number"
+          },
+          "estimated_arrival_hours": {
+            "title": "Estimated Arrival Hours",
+            "type": "integer"
+          },
+          "is_recommended": {
+            "default": false,
+            "title": "Is Recommended",
+            "type": "boolean"
+          },
+          "savings_vs_standard_usd": {
+            "default": 0.0,
+            "title": "Savings Vs Standard Usd",
+            "type": "number"
+          }
+        },
+        "required": [
+          "rail_name",
+          "exchange_rate",
+          "source_currency",
+          "source_amount",
+          "target_currency",
+          "target_amount",
+          "total_fee_usd",
+          "estimated_arrival_hours"
+        ],
+        "title": "RemittanceRoute",
+        "type": "object"
+      },
+      "UniversityInvoice": {
+        "properties": {
+          "institution_name": {
+            "title": "Institution Name",
+            "type": "string"
+          },
+          "beneficiary_account": {
+            "title": "Beneficiary Account",
+            "type": "string"
+          },
+          "swift_code": {
+            "title": "Swift Code",
+            "type": "string"
+          },
+          "amount_due": {
+            "title": "Amount Due",
+            "type": "number"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/CurrencyEnum"
+          },
+          "due_date": {
+            "title": "Due Date",
+            "type": "string"
+          },
+          "student_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Student Id"
+          },
+          "confidence_score": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence Score",
+            "type": "number"
+          }
+        },
+        "required": [
+          "institution_name",
+          "beneficiary_account",
+          "swift_code",
+          "amount_due",
+          "currency",
+          "due_date",
+          "confidence_score"
+        ],
+        "title": "UniversityInvoice",
+        "type": "object"
+      },
+      "DagTask": {
+        "properties": {
+          "task_id": {
+            "title": "Task Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "status": {
+            "default": "PENDING",
+            "description": "PENDING | RUNNING | COMPLETED | BLOCKED | FAILED",
+            "title": "Status",
+            "type": "string"
+          },
+          "required_tier": {
+            "$ref": "#/components/schemas/SecurityTier"
+          },
+          "tool_name": {
+            "title": "Tool Name",
+            "type": "string"
+          },
+          "output": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Output"
+          }
+        },
+        "required": [
+          "task_id",
+          "title",
+          "description",
+          "required_tier",
+          "tool_name"
+        ],
+        "title": "DagTask",
+        "type": "object"
+      },
+      "RemittancePlan": {
+        "properties": {
+          "plan_id": {
+            "title": "Plan Id",
+            "type": "string"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string"
+          },
+          "invoice": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UniversityInvoice"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "selected_route": {
+            "$ref": "#/components/schemas/RemittanceRoute"
+          },
+          "remaining_annual_quota_usd": {
+            "title": "Remaining Annual Quota Usd",
+            "type": "number"
+          },
+          "required_security_tier": {
+            "$ref": "#/components/schemas/SecurityTier"
+          },
+          "dag_tasks": {
+            "items": {
+              "$ref": "#/components/schemas/DagTask"
+            },
+            "title": "Dag Tasks",
+            "type": "array"
+          },
+          "is_executed": {
+            "default": false,
+            "title": "Is Executed",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "plan_id",
+          "user_id",
+          "invoice",
+          "selected_route",
+          "remaining_annual_quota_usd",
+          "required_security_tier",
+          "dag_tasks"
+        ],
+        "title": "RemittancePlan",
+        "type": "object"
+      },
+      "AuditRecord": {
+        "properties": {
+          "record_id": {
+            "title": "Record Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string"
+          },
+          "action_type": {
+            "title": "Action Type",
+            "type": "string"
+          },
+          "security_tier": {
+            "$ref": "#/components/schemas/SecurityTier"
+          },
+          "plan_id": {
+            "title": "Plan Id",
+            "type": "string"
+          },
+          "payload_hash": {
+            "title": "Payload Hash",
+            "type": "string"
+          },
+          "previous_hash": {
+            "title": "Previous Hash",
+            "type": "string"
+          },
+          "signature_verified": {
+            "title": "Signature Verified",
+            "type": "boolean"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "record_id",
+          "timestamp",
+          "user_id",
+          "action_type",
+          "security_tier",
+          "plan_id",
+          "payload_hash",
+          "previous_hash",
+          "signature_verified",
+          "status"
+        ],
+        "title": "AuditRecord",
+        "type": "object"
+      }
+    }
+  }
+}

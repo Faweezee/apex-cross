@@ -24,10 +24,10 @@
 * **Skill Focus:** `superpowers`, `codebase-design`
 * **Input Context:** `INITIAL_ARTIFACTS.md`
 * **Tasks:**
-  - [ ] Create `backend/app/schemas.py` with typed models:
+  - [x] Create `backend/app/schemas.py` with typed models:
     - `SecurityTier`, `CurrencyEnum`, `RemittanceRoute`, `UniversityInvoice`, `DagTask`, `RemittancePlan`, `AuditRecord`.
-  - [ ] Create `frontend/src/types/index.ts` mirroring all backend interfaces.
-  - [ ] Write schema validation tests in `backend/tests/test_schemas.py`.
+  - [x] Create `frontend/src/types/index.ts` mirroring all backend interfaces.
+  - [x] Write schema validation tests in `backend/tests/test_schemas.py`.
 * **Definition of Done:**
   ```bash
   pytest backend/tests/test_schemas.py

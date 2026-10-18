@@ -33,7 +33,7 @@ export interface DagTask {
   status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'BLOCKED' | 'FAILED';
   required_tier: SecurityTier;
   tool_name: string;
-  output?: Record<string, any>;
+  output?: Record<string, unknown>;
 }
 
 export interface RemittancePlan {
