@@ -108,12 +108,12 @@
 * **Skill Focus:** `security-scanner`, `modern-web-guidance`
 * **Input Context:** FIDO2 Passkey re-authentication specification
 * **Tasks:**
-  - [ ] Implement `backend/app/security/webauthn_service.py`:
+  - [x] Implement `backend/app/security/webauthn_service.py`:
     - Generate cryptographic challenge with `allowCredentials` restricted to user.
     - Verify assertion response against stored user credentials.
   - [ ] Implement `backend/app/security/audit_logger.py`:
     - SQLite append-only log with SHA-256 hash chaining.
-  - [ ] Expose endpoints `POST /api/auth/reauth/options` and `POST /api/auth/reauth/verify`.
+  - [x] Expose endpoints `POST /api/auth/reauth/options` and `POST /api/auth/reauth/verify`.
 * **Definition of Done:**
   ```bash
   pytest backend/tests/test_webauthn_service.py
