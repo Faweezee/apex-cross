@@ -6,6 +6,403 @@
     "version": "0.1.0"
   },
   "paths": {
+    "/api/agent/chat": {
+      "post": {
+        "tags": [
+          "Agent"
+        ],
+        "summary": "Agent Chat",
+        "description": "Inspect prompt through the pre-agent security firewall (raising HTTP 403 on attack),\nthen invoke the LangGraph state machine to compile a remittance DAG or request clarification.",
+        "operationId": "agent_chat_api_agent_chat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgentChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentChatResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/audit/logs": {
+      "get": {
+        "tags": [
+          "Cryptographic Audit Ledger"
+        ],
+        "summary": "List Audit Logs",
+        "description": "Return ordered cryptographic audit records and live chain verification status.",
+        "operationId": "list_audit_logs_api_audit_logs_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditLogsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/audit/verify": {
+      "get": {
+        "tags": [
+          "Cryptographic Audit Ledger"
+        ],
+        "summary": "Verify Audit Chain",
+        "description": "Recompute and verify every SHA-256 link across the SQLite append-only ledger.",
+        "operationId": "verify_audit_chain_api_audit_verify_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditChainVerification"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/reauth/options": {
+      "post": {
+        "tags": [
+          "WebAuthn Biometric Security"
+        ],
+        "summary": "Generate Reauth Options",
+        "description": "Generate FIDO2 WebAuthn step-up challenge options constrained to pre-registered user credentials.",
+        "operationId": "generate_reauth_options_api_auth_reauth_options_post",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "student-001",
+              "title": "Userid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Generate Reauth Options Api Auth Reauth Options Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/reauth/verify": {
+      "post": {
+        "tags": [
+          "WebAuthn Biometric Security"
+        ],
+        "summary": "Verify Reauth And Execute Wire",
+        "description": "Verify the FIDO2 WebAuthn biometric assertion signature via py_webauthn (failing closed with\nHTTP 403 SecurityException on invalid signature or expired challenge), then execute the\nsandbox SWIFT MT103 wire and return the verifiable receipt.",
+        "operationId": "verify_reauth_and_execute_wire_api_auth_reauth_verify_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebAuthnVerifyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebAuthnVerifyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fx/rates": {
+      "get": {
+        "tags": [
+          "Foreign Exchange"
+        ],
+        "summary": "Get Fx Rates",
+        "description": "Return live or cached FX rates, spread comparisons, and corridor fee savings.",
+        "operationId": "get_fx_rates_api_fx_rates_get",
+        "parameters": [
+          {
+            "name": "source_currency",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/CurrencyEnum",
+              "default": "CNY"
+            }
+          },
+          {
+            "name": "target_currency",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/CurrencyEnum",
+              "default": "HKD"
+            }
+          },
+          {
+            "name": "target_amount",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "exclusiveMinimum": 0.0,
+              "default": 85000.0,
+              "title": "Target Amount"
+            }
+          },
+          {
+            "name": "use_live",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Use Live"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FXRatesResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/invoice/upload": {
+      "post": {
+        "tags": [
+          "Invoice Ingestion"
+        ],
+        "summary": "Upload Invoice",
+        "description": "Ingest an uploaded tuition invoice (PDF/image) and extract UniversityInvoice fields.",
+        "operationId": "upload_invoice_api_invoice_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_invoice_api_invoice_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceUploadResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/security/inspect": {
+      "post": {
+        "tags": [
+          "Security"
+        ],
+        "summary": "Inspect Prompt",
+        "description": "Validate user prompt against the adversarial firewall or raise SecurityException (HTTP 403).",
+        "operationId": "inspect_prompt_api_security_inspect_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromptInspectRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromptInspectResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/transfers/micro-convert": {
+      "post": {
+        "tags": [
+          "Transfers"
+        ],
+        "summary": "Execute Micro Conversion",
+        "description": "Execute a Tier 2 micro-conversion (<= $500 USD equivalent) after verifying:\n1. Explicit 1-click user confirmation (`user_confirmed=True`).\n2. Transfer amount in USD equivalent is <= $500.00 USD (Tier 2 boundary).\n3. Locked `quoted_rate` is within `max_slippage_bps` of the live/cached mid-market rate.\n4. Sufficient wallet balance in `source_currency`.",
+        "operationId": "execute_micro_conversion_api_transfers_micro_convert_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MicroConvertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MicroConvertResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/health": {
       "get": {
         "tags": [
@@ -35,14 +432,235 @@
   },
   "components": {
     "schemas": {
-      "SecurityTier": {
-        "enum": [
-          "TIER_1_AUTONOMOUS",
-          "TIER_2_CONFIRMATION",
-          "TIER_3_BIOMETRIC"
+      "AgentChatRequest": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "title": "User Id",
+            "default": "student-001"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Student conversational remittance instruction"
+          },
+          "source_currency": {
+            "$ref": "#/components/schemas/CurrencyEnum",
+            "default": "CNY"
+          },
+          "invoice": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UniversityInvoice"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
         ],
-        "title": "SecurityTier",
-        "type": "string"
+        "title": "AgentChatRequest",
+        "description": "Conversational input and optional parsed invoice for the ApexCross planner."
+      },
+      "AgentChatResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "assistant_message": {
+            "type": "string",
+            "title": "Assistant Message"
+          },
+          "requires_clarification": {
+            "type": "boolean",
+            "title": "Requires Clarification"
+          },
+          "missing_fields": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Missing Fields"
+          },
+          "required_security_tier": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SecurityTier"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "routes": {
+            "items": {
+              "$ref": "#/components/schemas/RemittanceRoute"
+            },
+            "type": "array",
+            "title": "Routes"
+          },
+          "plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RemittancePlan"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "assistant_message",
+          "requires_clarification"
+        ],
+        "title": "AgentChatResponse",
+        "description": "Structured response containing conversational guidance, clarification flags, and compiled DAG plan."
+      },
+      "AuditChainVerification": {
+        "properties": {
+          "is_valid": {
+            "type": "boolean",
+            "title": "Is Valid"
+          },
+          "total_records": {
+            "type": "integer",
+            "title": "Total Records"
+          },
+          "latest_hash": {
+            "type": "string",
+            "title": "Latest Hash"
+          },
+          "tampered_record_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tampered Record Id"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "is_valid",
+          "total_records",
+          "latest_hash",
+          "reason"
+        ],
+        "title": "AuditChainVerification",
+        "description": "Result of verifying the entire append-only SHA-256 hash chain."
+      },
+      "AuditLogsResponse": {
+        "properties": {
+          "records": {
+            "items": {
+              "$ref": "#/components/schemas/ChainedAuditRecord"
+            },
+            "type": "array",
+            "title": "Records"
+          },
+          "verification": {
+            "$ref": "#/components/schemas/AuditChainVerification"
+          }
+        },
+        "type": "object",
+        "required": [
+          "records",
+          "verification"
+        ],
+        "title": "AuditLogsResponse",
+        "description": "Typed response containing SHA-256 hash-chained audit records and chain integrity status."
+      },
+      "Body_upload_invoice_api_invoice_upload_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_invoice_api_invoice_upload_post"
+      },
+      "ChainedAuditRecord": {
+        "properties": {
+          "record_id": {
+            "type": "string",
+            "title": "Record Id"
+          },
+          "timestamp": {
+            "type": "string",
+            "title": "Timestamp"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "action_type": {
+            "type": "string",
+            "title": "Action Type"
+          },
+          "security_tier": {
+            "$ref": "#/components/schemas/SecurityTier"
+          },
+          "plan_id": {
+            "type": "string",
+            "title": "Plan Id"
+          },
+          "payload_hash": {
+            "type": "string",
+            "title": "Payload Hash"
+          },
+          "previous_hash": {
+            "type": "string",
+            "title": "Previous Hash"
+          },
+          "signature_verified": {
+            "type": "boolean",
+            "title": "Signature Verified"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "record_hash": {
+            "type": "string",
+            "title": "Record Hash"
+          }
+        },
+        "type": "object",
+        "required": [
+          "record_id",
+          "timestamp",
+          "user_id",
+          "action_type",
+          "security_tier",
+          "plan_id",
+          "payload_hash",
+          "previous_hash",
+          "signature_verified",
+          "status",
+          "record_hash"
+        ],
+        "title": "ChainedAuditRecord",
+        "description": "AuditRecord extended with its self-verifying SHA-256 record_hash."
       },
       "CurrencyEnum": {
         "enum": [
@@ -54,6 +672,364 @@
         ],
         "title": "CurrencyEnum",
         "type": "string"
+      },
+      "DagTask": {
+        "properties": {
+          "task_id": {
+            "title": "Task Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "status": {
+            "default": "PENDING",
+            "description": "PENDING | RUNNING | COMPLETED | BLOCKED | FAILED",
+            "title": "Status",
+            "type": "string"
+          },
+          "required_tier": {
+            "$ref": "#/components/schemas/SecurityTier"
+          },
+          "tool_name": {
+            "title": "Tool Name",
+            "type": "string"
+          },
+          "output": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Output"
+          }
+        },
+        "required": [
+          "task_id",
+          "title",
+          "description",
+          "required_tier",
+          "tool_name"
+        ],
+        "title": "DagTask",
+        "type": "object"
+      },
+      "FXRatesResponse": {
+        "properties": {
+          "source_currency": {
+            "$ref": "#/components/schemas/CurrencyEnum"
+          },
+          "target_currency": {
+            "$ref": "#/components/schemas/CurrencyEnum"
+          },
+          "target_amount": {
+            "type": "number",
+            "title": "Target Amount"
+          },
+          "mid_market_rate": {
+            "type": "number",
+            "title": "Mid Market Rate"
+          },
+          "security_tier": {
+            "$ref": "#/components/schemas/SecurityTier",
+            "default": "TIER_1_AUTONOMOUS"
+          },
+          "all_usd_rates": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "All Usd Rates"
+          },
+          "routes": {
+            "items": {
+              "$ref": "#/components/schemas/RemittanceRoute"
+            },
+            "type": "array",
+            "title": "Routes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_currency",
+          "target_currency",
+          "target_amount",
+          "mid_market_rate",
+          "all_usd_rates",
+          "routes"
+        ],
+        "title": "FXRatesResponse",
+        "description": "Typed response for live FX spreads and corridor comparisons."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "InvoiceUploadResponse": {
+        "properties": {
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "invoice": {
+            "$ref": "#/components/schemas/UniversityInvoice"
+          },
+          "field_confidences": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Field Confidences"
+          }
+        },
+        "type": "object",
+        "required": [
+          "filename",
+          "invoice",
+          "field_confidences"
+        ],
+        "title": "InvoiceUploadResponse",
+        "description": "Structured response containing extracted UniversityInvoice and per-field confidence scores."
+      },
+      "MicroConvertRequest": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "title": "User Id",
+            "default": "student-001"
+          },
+          "source_currency": {
+            "$ref": "#/components/schemas/CurrencyEnum"
+          },
+          "target_currency": {
+            "$ref": "#/components/schemas/CurrencyEnum"
+          },
+          "source_amount": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Source Amount"
+          },
+          "quoted_rate": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Quoted Rate"
+          },
+          "max_slippage_bps": {
+            "type": "integer",
+            "maximum": 500.0,
+            "minimum": 0.0,
+            "title": "Max Slippage Bps",
+            "default": 50
+          },
+          "user_confirmed": {
+            "type": "boolean",
+            "title": "User Confirmed",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "source_currency",
+          "target_currency",
+          "source_amount",
+          "quoted_rate"
+        ],
+        "title": "MicroConvertRequest",
+        "description": "Request payload for Tier 2 micro-conversion (<= $500 USD equivalent)."
+      },
+      "MicroConvertResponse": {
+        "properties": {
+          "conversion_id": {
+            "type": "string",
+            "title": "Conversion Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "security_tier": {
+            "$ref": "#/components/schemas/SecurityTier"
+          },
+          "biometric_required": {
+            "type": "boolean",
+            "title": "Biometric Required",
+            "default": false
+          },
+          "source_currency": {
+            "$ref": "#/components/schemas/CurrencyEnum"
+          },
+          "target_currency": {
+            "$ref": "#/components/schemas/CurrencyEnum"
+          },
+          "source_amount": {
+            "type": "number",
+            "title": "Source Amount"
+          },
+          "executed_rate": {
+            "type": "number",
+            "title": "Executed Rate"
+          },
+          "converted_target_amount": {
+            "type": "number",
+            "title": "Converted Target Amount"
+          },
+          "fee_usd": {
+            "type": "number",
+            "title": "Fee Usd"
+          },
+          "slippage_bps": {
+            "type": "number",
+            "title": "Slippage Bps"
+          },
+          "source_balance_before": {
+            "type": "number",
+            "title": "Source Balance Before"
+          },
+          "source_balance_after": {
+            "type": "number",
+            "title": "Source Balance After"
+          },
+          "target_balance_before": {
+            "type": "number",
+            "title": "Target Balance Before"
+          },
+          "target_balance_after": {
+            "type": "number",
+            "title": "Target Balance After"
+          }
+        },
+        "type": "object",
+        "required": [
+          "conversion_id",
+          "status",
+          "security_tier",
+          "source_currency",
+          "target_currency",
+          "source_amount",
+          "executed_rate",
+          "converted_target_amount",
+          "fee_usd",
+          "slippage_bps",
+          "source_balance_before",
+          "source_balance_after",
+          "target_balance_before",
+          "target_balance_after"
+        ],
+        "title": "MicroConvertResponse",
+        "description": "Structured receipt for an executed Tier 2 micro-conversion."
+      },
+      "PromptInspectRequest": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "User prompt or conversational input to inspect"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "PromptInspectRequest",
+        "description": "Request payload for pre-agent prompt inspection."
+      },
+      "PromptInspectResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "SAFE"
+          },
+          "is_safe": {
+            "type": "boolean",
+            "title": "Is Safe",
+            "default": true
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reason"
+        ],
+        "title": "PromptInspectResponse",
+        "description": "Structured response when prompt passes security inspection."
+      },
+      "RemittancePlan": {
+        "properties": {
+          "plan_id": {
+            "title": "Plan Id",
+            "type": "string"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string"
+          },
+          "invoice": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/UniversityInvoice"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "selected_route": {
+            "$ref": "#/components/schemas/RemittanceRoute"
+          },
+          "remaining_annual_quota_usd": {
+            "title": "Remaining Annual Quota Usd",
+            "type": "number"
+          },
+          "required_security_tier": {
+            "$ref": "#/components/schemas/SecurityTier"
+          },
+          "dag_tasks": {
+            "items": {
+              "$ref": "#/components/schemas/DagTask"
+            },
+            "title": "Dag Tasks",
+            "type": "array"
+          },
+          "is_executed": {
+            "default": false,
+            "title": "Is Executed",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "plan_id",
+          "user_id",
+          "invoice",
+          "selected_route",
+          "remaining_annual_quota_usd",
+          "required_security_tier",
+          "dag_tasks"
+        ],
+        "title": "RemittancePlan",
+        "type": "object"
       },
       "RemittanceRoute": {
         "properties": {
@@ -112,6 +1088,83 @@
         "title": "RemittanceRoute",
         "type": "object"
       },
+      "SecurityTier": {
+        "enum": [
+          "TIER_1_AUTONOMOUS",
+          "TIER_2_CONFIRMATION",
+          "TIER_3_BIOMETRIC"
+        ],
+        "title": "SecurityTier",
+        "type": "string"
+      },
+      "SwiftWireReceipt": {
+        "properties": {
+          "reference_id": {
+            "type": "string",
+            "title": "Reference Id"
+          },
+          "uetr": {
+            "type": "string",
+            "title": "Uetr"
+          },
+          "value_date": {
+            "type": "string",
+            "title": "Value Date"
+          },
+          "beneficiary_name": {
+            "type": "string",
+            "title": "Beneficiary Name"
+          },
+          "beneficiary_account": {
+            "type": "string",
+            "title": "Beneficiary Account"
+          },
+          "swift_code": {
+            "type": "string",
+            "title": "Swift Code"
+          },
+          "amount": {
+            "type": "number",
+            "title": "Amount"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/CurrencyEnum"
+          },
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "mt103_message": {
+            "type": "string",
+            "title": "Mt103 Message"
+          },
+          "transaction_hash": {
+            "type": "string",
+            "title": "Transaction Hash"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "SETTLED"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reference_id",
+          "uetr",
+          "value_date",
+          "beneficiary_name",
+          "beneficiary_account",
+          "swift_code",
+          "amount",
+          "currency",
+          "student_id",
+          "mt103_message",
+          "transaction_hash"
+        ],
+        "title": "SwiftWireReceipt",
+        "description": "Structured SWIFT MT103 wire confirmation receipt and SHA-256 transaction hash."
+      },
       "UniversityInvoice": {
         "properties": {
           "institution_name": {
@@ -168,111 +1221,132 @@
         "title": "UniversityInvoice",
         "type": "object"
       },
-      "DagTask": {
+      "ValidationError": {
         "properties": {
-          "task_id": {
-            "title": "Task Id",
-            "type": "string"
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
           },
-          "title": {
-            "title": "Title",
-            "type": "string"
+          "msg": {
+            "type": "string",
+            "title": "Message"
           },
-          "description": {
-            "title": "Description",
-            "type": "string"
+          "type": {
+            "type": "string",
+            "title": "Error Type"
           },
-          "status": {
-            "default": "PENDING",
-            "description": "PENDING | RUNNING | COMPLETED | BLOCKED | FAILED",
-            "title": "Status",
-            "type": "string"
+          "input": {
+            "title": "Input"
           },
-          "required_tier": {
-            "$ref": "#/components/schemas/SecurityTier"
-          },
-          "tool_name": {
-            "title": "Tool Name",
-            "type": "string"
-          },
-          "output": {
-            "anyOf": [
-              {
-                "additionalProperties": true,
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "default": null,
-            "title": "Output"
+          "ctx": {
+            "type": "object",
+            "title": "Context"
           }
         },
+        "type": "object",
         "required": [
-          "task_id",
-          "title",
-          "description",
-          "required_tier",
-          "tool_name"
+          "loc",
+          "msg",
+          "type"
         ],
-        "title": "DagTask",
-        "type": "object"
+        "title": "ValidationError"
       },
-      "RemittancePlan": {
+      "WebAuthnVerifyRequest": {
         "properties": {
+          "userId": {
+            "type": "string",
+            "title": "Userid",
+            "default": "student-001"
+          },
+          "assertion": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Assertion"
+          },
           "plan_id": {
+            "type": "string",
             "title": "Plan Id",
-            "type": "string"
+            "default": "plan-default"
+          },
+          "beneficiary_name": {
+            "type": "string",
+            "title": "Beneficiary Name",
+            "default": "HKUST"
+          },
+          "beneficiary_account": {
+            "type": "string",
+            "title": "Beneficiary Account",
+            "default": "004-123-456789-001"
+          },
+          "swift_code": {
+            "type": "string",
+            "title": "Swift Code",
+            "default": "HSBCHKHHHKH"
+          },
+          "amount": {
+            "type": "number",
+            "exclusiveMinimum": 0.0,
+            "title": "Amount",
+            "default": 85000.0
+          },
+          "currency": {
+            "$ref": "#/components/schemas/CurrencyEnum",
+            "default": "HKD"
+          },
+          "student_id": {
+            "type": "string",
+            "title": "Student Id",
+            "default": "20991234"
+          }
+        },
+        "type": "object",
+        "required": [
+          "assertion"
+        ],
+        "title": "WebAuthnVerifyRequest",
+        "description": "Request payload for verifying a FIDO2 WebAuthn biometric assertion and executing a Tier 3 wire."
+      },
+      "WebAuthnVerifyResponse": {
+        "properties": {
+          "verified": {
+            "type": "boolean",
+            "title": "Verified"
+          },
+          "security_tier": {
+            "$ref": "#/components/schemas/SecurityTier",
+            "default": "TIER_3_BIOMETRIC"
           },
           "user_id": {
-            "title": "User Id",
-            "type": "string"
+            "type": "string",
+            "title": "User Id"
           },
-          "invoice": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/UniversityInvoice"
-              },
-              {
-                "type": "null"
-              }
-            ]
+          "plan_id": {
+            "type": "string",
+            "title": "Plan Id"
           },
-          "selected_route": {
-            "$ref": "#/components/schemas/RemittanceRoute"
-          },
-          "remaining_annual_quota_usd": {
-            "title": "Remaining Annual Quota Usd",
-            "type": "number"
-          },
-          "required_security_tier": {
-            "$ref": "#/components/schemas/SecurityTier"
-          },
-          "dag_tasks": {
-            "items": {
-              "$ref": "#/components/schemas/DagTask"
-            },
-            "title": "Dag Tasks",
-            "type": "array"
-          },
-          "is_executed": {
-            "default": false,
-            "title": "Is Executed",
-            "type": "boolean"
+          "receipt": {
+            "$ref": "#/components/schemas/SwiftWireReceipt"
           }
         },
+        "type": "object",
         "required": [
-          "plan_id",
+          "verified",
           "user_id",
-          "invoice",
-          "selected_route",
-          "remaining_annual_quota_usd",
-          "required_security_tier",
-          "dag_tasks"
+          "plan_id",
+          "receipt"
         ],
-        "title": "RemittancePlan",
-        "type": "object"
+        "title": "WebAuthnVerifyResponse",
+        "description": "Structured response returned after successful FIDO2 passkey verification and SWIFT clearing."
       },
       "AuditRecord": {
         "properties": {

@@ -156,12 +156,12 @@
 * **Skill Focus:** `code-review`, `security-scanner`, `git-commit-sage`
 * **Input Context:** Official Fintechathon 2026 International Track Submission Package
 * **Tasks:**
-  - [ ] Run full end-to-end integration test across frontend and backend.
-  - [ ] Fill out `docs/technical_document.docx` (Project Overview, System Architecture, Agent Design, Security Design, Deployment).
-  - [ ] Fill out `docs/presentation_deck.pptx` (10-slide defense outline).
-  - [ ] Fill out `docs/security_assessment.docx` and `docs/execution_evidence.docx`.
-  - [ ] Record and edit 4-minute demo video (`docs/demo_video.mp4`).
-  - [ ] Format root `README.md` with one-command Docker launch instructions.
+  - [x] Run full end-to-end integration test across frontend and backend.
+  - [x] Fill out `docs/technical_document.docx` (Project Overview, System Architecture, Agent Design, Security Design, Deployment).
+  - [x] Fill out `docs/presentation_deck.pptx` (10-slide defense outline).
+  - [x] Fill out `docs/security_assessment.docx` and `docs/execution_evidence.docx`.
+  - [x] Draft 4-minute demo video script (`docs/demo_video_script.md`).
+  - [x] Format root `README.md` with one-command Docker launch instructions.
 * **Definition of Done:**
   - All unit/security tests pass (100% green).
   - Docker compose launches both services without errors.
