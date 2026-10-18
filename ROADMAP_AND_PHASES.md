@@ -57,8 +57,8 @@
 * **Skill Focus:** `tdd`
 * **Input Context:** Regulatory quota requirement ($50,000 USD annual limit for students)
 * **Tasks:**
-  - [ ] Write unit test `backend/tests/test_quota.py` checking allowance boundaries and rejection logic.
-  - [ ] Implement `backend/app/tools/quota_tool.py`:
+  - [x] Write unit test `backend/tests/test_quota.py` checking allowance boundaries and rejection logic.
+  - [x] Implement `backend/app/tools/quota_tool.py`:
     - Tracks user's remaining annual education quota.
     - Returns `ALLOW`, `WARNING`, or `REJECT` flags with exact remaining allowance.
 * **Definition of Done:**
@@ -88,14 +88,14 @@
 * **Skill Focus:** `superpowers`, `codebase-design`
 * **Input Context:** "Understand -> Plan -> Execute Securely" loop
 * **Tasks:**
-  - [ ] Implement `backend/app/agent/state.py` (`AgentState`).
-  - [ ] Implement `backend/app/agent/nodes.py`:
+  - [x] Implement `backend/app/agent/state.py` (`AgentState`).
+  - [x] Implement `backend/app/agent/nodes.py`:
     - `understand_intent_node`: Extract beneficiary, amount, currency, deadline.
     - `parse_invoice_node`: Ingest and OCR university fee invoice.
     - `plan_remittance_node`: Compile sequential DAG tasks (`ValidateStudent` -> `CheckQuota` -> `CompareCorridors` -> `AwaitingAuth`).
     - `clarification_node`: Interactively prompt user when critical fields are missing.
-  - [ ] Compile graph in `backend/app/agent/graph.py` with rollback support.
-  - [ ] Expose endpoint `POST /api/agent/chat`.
+  - [x] Compile graph in `backend/app/agent/graph.py` with rollback support.
+  - [x] Expose endpoint `POST /api/agent/chat`.
 * **Definition of Done:**
   ```bash
   curl -X POST http://localhost:8000/api/agent/chat -H "Content-Type: application/json" -d '{"message": "Wire 85,000 HKD tuition to HKUST"}'

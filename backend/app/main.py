@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from pydantic import TypeAdapter
 
 from app.config import settings
+from app.routes.agent_routes import router as agent_router
 from app.routes.fx_routes import router as fx_router
 from app.routes.invoice_routes import router as invoice_router
 from app.routes.security_routes import router as security_router
@@ -49,6 +50,7 @@ async def security_exception_handler(request: Request, exc: SecurityException) -
     )
 
 
+app.include_router(agent_router)
 app.include_router(fx_router)
 app.include_router(invoice_router)
 app.include_router(security_router)
