@@ -16,10 +16,10 @@ function hex64(seed: number): string {
 
 const ACTIONS: Array<Pick<ChainedAuditRecord, 'action_type' | 'security_tier' | 'status'>> = [
   { action_type: 'INVOICE_PARSED', security_tier: 'TIER_1_AUTONOMOUS', status: 'SUCCESS' },
-  { action_type: 'QUOTA_CHECK', security_tier: 'TIER_1_AUTONOMOUS', status: 'ALLOW' },
+  { action_type: 'SECURITY_EXCEPTION_BLOCKED', security_tier: 'TIER_1_AUTONOMOUS', status: 'BLOCKED' },
   { action_type: 'CORRIDOR_SELECTED', security_tier: 'TIER_1_AUTONOMOUS', status: 'SUCCESS' },
-  { action_type: 'MICRO_CONVERT', security_tier: 'TIER_2_CONFIRMATION', status: 'COMPLETED' },
-  { action_type: 'WIRE_EXECUTED', security_tier: 'TIER_3_BIOMETRIC', status: 'SETTLED' },
+  { action_type: 'TIER2_MICRO_CONVERT', security_tier: 'TIER_2_CONFIRMATION', status: 'COMPLETED' },
+  { action_type: 'TIER3_WIRE_SETTLED', security_tier: 'TIER_3_BIOMETRIC', status: 'SETTLED' },
 ];
 
 /** 5 hash-chained records. Each previous_hash equals the prior record_hash. */

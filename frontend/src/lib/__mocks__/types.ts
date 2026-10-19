@@ -97,7 +97,7 @@ export interface AuditLogsResponse {
 
 export interface MockErrorResponse {
   status: number;
-  body: { detail: string | Record<string, unknown> };
+  body: Record<string, unknown>;
 }
 
 export type HealthResponse = Record<string, string>;

@@ -144,13 +144,47 @@ export function mockQuotaWarningResponse(): AgentChatResponse {
   };
 }
 
-/** HTTP 403 from the prompt-injection firewall. */
-export function mockFirewallBlockedResponse(): MockErrorResponse {
+/**
+ * Plan whose required tier is TIER_2_CONFIRMATION (micro-conversion path).
+ * Uses a small CNY -> HKD route so the Execute button opens the Tier 2 modal.
+ */
+export function mockTier2PlanResponse(): AgentChatResponse {
+  const routes = mockCorridorRoutes().map((r) => ({
+    ...r,
+    source_amount: 1000.0,
+    target_amount: Math.round(1000 * r.exchange_rate * 100) / 100,
+  }));
+  const tasks = dagTasks({
+    4: {
+      title: 'Confirm Micro-Conversion',
+      required_tier: 'TIER_2_CONFIRMATION',
+      tool_name: 'micro_convert',
+    },
+  });
+  return {
+    status: 'PLAN_READY',
+    assistant_message: 'This is a small conversion. One click confirms it.',
+    requires_clarification: false,
+    missing_fields: [],
+    required_security_tier: 'TIER_2_CONFIRMATION',
+    routes,
+    plan: basePlan({
+      selected_route: routes[1],
+      required_security_tier: 'TIER_2_CONFIRMATION',
+      dag_tasks: tasks,
+    }),
+  };
+}
+
+/**
+ * HTTP 403 from the pre-agent firewall. The body matches the SecurityException
+ * payload that src/lib/api.ts parses: { status, error, reason }.
+ */
+export function mockFirewallBlockedResponse(
+  reason = 'Prompt injection detected: instruction override attempt.',
+): MockErrorResponse {
   return {
     status: 403,
-    body: {
-      detail:
-        'SecurityException: Prompt blocked by firewall. Detected instruction override attempt.',
-    },
+    body: { status: 'BLOCKED', error: 'SecurityException', reason },
   };
 }
