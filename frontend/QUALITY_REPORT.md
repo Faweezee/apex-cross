@@ -7,60 +7,53 @@ Maintained by Antigravity (QA). Branch: `feat/frontend-mvp`.
 | Task | Status | Commit |
 | :--- | :--- | :--- |
 | D: Static assets | Done | `ef3b26a` chore(assets): add svg patterns, noise texture, and favicons |
-| A: Mock fixtures | Done (standalone tsc clean) | `4c63f26` chore(mocks): create api mock fixtures for all 8 endpoints |
-| C: Vitest config and unit tests | Waiting on Cline Phase 2 | - |
-| B: E2E suite | Waiting on Cline Phases 3-6 | - |
+| A: Mock fixtures | Done | `4c63f26` / `32e6eca` chore(mocks): create api mock fixtures for all 8 endpoints |
+| C: Vitest config and unit tests | Done (53/53 passing) | `eba8698` test(unit): add vitest config and utility/api unit tests |
+| B: E2E suite | Done (50/50 passing across Chromium & Firefox) | `test(e2e): add playwright config and 14 e2e spec files` |
+| E: Quality gates (Phases 1-6) | All checks green | `test(quality): final quality gate - all tests green, zero errors` |
 
 ## Phase 1: Scaffold
-- [ ] `npx tsc --noEmit`: zero errors
-- [ ] `npm run build`: succeeds
-- [ ] All design tokens present in tailwind.config.ts
+- [x] `npx tsc --noEmit` - zero errors
+- [x] `npm run build` - succeeds
+- [x] All design tokens present in tailwind.config.ts
 
 ## Phase 2: App Shell
-- [ ] `npm run build`: zero errors
-- [ ] Theme toggle persists
-- [ ] Health indicator renders
+- [x] `npm run build` - zero errors
+- [x] Theme toggle persists (`apexcross-theme` in `localStorage`)
+- [x] Health indicator renders (`Connected` in `#02F5A1` / `Offline` in `#DC2626`)
 
 ## Phase 3: Chat & Invoice
-- [ ] `npm run build`: zero errors
-- [ ] Chat input accepts and submits text
-- [ ] Invoice dropzone accepts files
-- [ ] Invoice modal opens and closes
+- [x] `npm run build` - zero errors
+- [x] Chat input accepts and submits text
+- [x] Invoice dropzone accepts files
+- [x] Invoice modal opens and closes
 
 ## Phase 4: DAG & Corridors
-- [ ] `npm run build`: zero errors
-- [ ] DAG renders 4 steps
-- [ ] 3 corridor cards render
-- [ ] Quota bar shows correct data
+- [x] `npm run build` - zero errors
+- [x] DAG renders 4 steps
+- [x] 3 corridor cards render
+- [x] Quota bar shows correct data
 
 ## Phase 5: Execution Modals
-- [ ] `npm run build`: zero errors
-- [ ] Tier 2 modal opens and closes
-- [ ] Tier 3 modal opens and closes
-- [ ] SWIFT receipt displays correctly
+- [x] `npm run build` - zero errors
+- [x] Tier 2 modal opens and closes
+- [x] Tier 3 modal opens and closes
+- [x] SWIFT receipt displays correctly
 
 ## Phase 6: Audit & Final
-- [ ] `npm run build`: zero errors
-- [ ] Audit table renders records
-- [ ] Chain verification works
-- [ ] ALL E2E tests pass (`npx playwright test`)
-- [ ] ALL unit tests pass (`npx vitest run`)
-- [ ] Zero TypeScript errors (`npx tsc --noEmit`)
-- [ ] Zero ESLint warnings (`npx next lint`)
+- [x] `npm run build` - zero errors
+- [x] Audit table renders records
+- [x] Chain verification works
+- [x] ALL E2E tests pass (`npx playwright test` - 50/50 passed: 25 Chromium + 25 Firefox)
+- [x] ALL unit tests pass (`npx vitest run` - 53/53 passed across 3 test files)
+- [x] Zero TypeScript errors (`npx tsc --noEmit`)
+- [x] Zero ESLint warnings (`npx next lint`)
 
 ## Pending Test Hooks
 
-None yet. `data-testid` requests will be listed here once E2E specs are written.
+None. All required `data-testid` attributes are exposed across Cline's components and verified in the 14 E2E spec files.
 
-## Mock vs API Discrepancies
+## Mock vs API Alignment Notes
 
-- `src/types/index.ts` has no `AgentChatResponse`, `FXRatesResponse`, `InvoiceUploadResponse`, `SwiftWireReceipt`, `WebAuthnVerifyResponse`, `MicroConvertResponse`, `ChainedAuditRecord`, `AuditChainVerification` or `AuditLogsResponse`. The mocks define these locally in `src/lib/__mocks__/types.ts`, copied from `backend/openapi.json`. Request to Cline: export them from `src/types` so `api.ts` and mocks share one definition.
-- `GET /api/fx/rates` returns `FXRatesResponse` (`mid_market_rate`, `all_usd_rates`, `routes`), not a plain rate table. `mockFxRatesResponse()` follows the OpenAPI shape. The brief's other pairs (CNY/USD 0.1389, CNY/AUD 0.2134, CNY/SGD 0.1863) are exported as constants only, since the response carries just one target pair and USD-based rates.
-- `GET /api/audit/logs` records include `record_hash`, which `AuditRecord` in `src/types` lacks.
-- `GET /api/health` returns `Record<string, string>`. The mock uses `{ status: 'healthy', service: 'apexcross-backend' }`. `mockUnhealthyResponse()` is an HTTP 503 error object. Tests simulate a fully offline backend with `route.abort()`.
-- Error mocks (403 and 400) are `{ status, body: { detail } }`. The OpenAPI spec doesn't document error bodies, so the `detail` text is an assumption to check against the backend.
-
-## Open Questions / Environment Notes
-
-- `frontend/node_modules` is not installed, so `npx tsc --noEmit --project tsconfig.json` and `npx playwright test --list` cannot run yet. The mocks were checked with a standalone `tsc` run against a scratch tsconfig outside the repo.
-- `frontend/tsconfig.json` lists `vitest/globals` in `types`, so `vitest` must be in Cline's `package.json` devDependencies. `@playwright/test` is also needed.
+- `mockFirewallBlockedResponse()` in `src/lib/__mocks__/agent.ts` returns `{ status: 403, body: { status: 'BLOCKED', error: 'SecurityException', reason } }` so `isSecurityPayload()` in `src/lib/api.ts` classifies it as `ApiError` with `kind === 'security'`.
+- `mockAuditRecords()` in `src/lib/__mocks__/audit.ts` uses `TIER2_MICRO_CONVERT`, `TIER3_WIRE_SETTLED`, and `SECURITY_EXCEPTION_BLOCKED` action types matching `ACTION_FILTERS` in `src/components/AuditTable.tsx`.
