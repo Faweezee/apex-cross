@@ -1,0 +1,33 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js
+.next/
+out/
+build/
+
+# Production
+dist/
+
+# Testing
+coverage/
+playwright-report/
+test-results/
+.vitest/
+
+# Misc
+.DS_Store
+*.pem
+.vercel
+*.tsbuildinfo
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env
+.env*.local
+.env
