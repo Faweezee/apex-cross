@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Moon, Sun } from 'lucide-react';
+import { Moon, Sun } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
 const STORAGE_KEY = 'apexcross-theme';
@@ -58,9 +58,9 @@ export function ThemeToggle({ className }: { className?: string }) {
       )}
     >
       {mounted && !isDark ? (
-        <Sun size={16} strokeWidth={1.5} aria-hidden="true" />
+        <Sun size={17} weight="regular" aria-hidden="true" />
       ) : (
-        <Moon size={16} strokeWidth={1.5} aria-hidden="true" />
+        <Moon size={17} weight="regular" aria-hidden="true" />
       )}
     </button>
   );

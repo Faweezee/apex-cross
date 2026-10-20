@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Check, Copy, FileCheck } from 'lucide-react';
+import { Check, Copy, SealCheck } from '@/components/icons';
 import type { SwiftWireReceipt } from '@/lib/api';
 import { formatAmount } from '@/lib/utils';
 import { Badge } from './ui/Badge';
@@ -38,9 +38,9 @@ function CopyButton({ value, testId }: { value: string; testId: string }) {
       className="glass-inline flex h-7 w-7 shrink-0 items-center justify-center text-text-secondary transition-colors duration-200 hover:text-mint"
     >
       {copied ? (
-        <Check size={12} strokeWidth={2} aria-hidden="true" className="text-mint" />
+        <Check size={13} weight="bold" aria-hidden="true" className="text-mint" />
       ) : (
-        <Copy size={12} strokeWidth={2} aria-hidden="true" />
+        <Copy size={13} weight="regular" aria-hidden="true" />
       )}
     </button>
   );
@@ -63,7 +63,7 @@ export function SwiftReceipt({ open, receipt, onClose, onViewLedger }: SwiftRece
       width="receipt"
       title="Wire settled"
       subtitle="SWIFT MT103 single customer credit transfer confirmation."
-      icon={<FileCheck size={16} strokeWidth={2} className="text-mint" />}
+      icon={<SealCheck size={18} weight="fill" className="text-mint" />}
       footer={
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Badge tone="success" animate data-testid="swift-status">

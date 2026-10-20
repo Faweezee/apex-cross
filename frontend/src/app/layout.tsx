@@ -25,6 +25,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   title: 'ApexCross (汇护通) — Cross-Border Tuition Payment Agent',
   description:
     'Autonomous, compliance-first cross-border financial agent that parses university tuition invoices, optimizes multi-currency FX remittance corridors across APEC economies, and securely executes bank-grade wires under FIDO2/WebAuthn biometric guardrails.',

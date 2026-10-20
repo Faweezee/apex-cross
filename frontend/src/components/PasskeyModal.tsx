@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Fingerprint, ShieldCheck } from 'lucide-react';
+import { Fingerprint, ShieldCheck } from '@/components/icons';
 import { startAuthentication } from '@simplewebauthn/browser';
 import type { Currency } from '@/types';
 import {
@@ -92,7 +92,9 @@ export function PasskeyModal({ open, target, onClose, onSuccess }: PasskeyModalP
       locked={locked}
       title="Authorize high-value wire"
       subtitle="This wire exceeds $1,000 USD and requires hardware-backed biometric verification."
-      icon={<Fingerprint size={16} strokeWidth={2} className="text-danger" />}
+      icon={<Fingerprint size={28} weight="regular" className="text-white" />}
+      iconContainerClassName="self-stretch w-14 min-h-[56px] rounded-lg"
+      iconContainerStyle={{ background: 'rgba(255, 255, 255, 0.08)' }}
       footer={
         <div className="flex items-center justify-between gap-3">
           <Badge tone="danger">Tier 3 biometric</Badge>
@@ -108,7 +110,7 @@ export function PasskeyModal({ open, target, onClose, onSuccess }: PasskeyModalP
             <Button
               onClick={authenticate}
               loading={locked}
-              icon={<Fingerprint size={14} strokeWidth={2} aria-hidden="true" />}
+              icon={<Fingerprint size={16} weight="bold" aria-hidden="true" />}
               data-testid="tier3-authenticate"
             >
               {phase === 'failed' ? 'Try again' : 'Authenticate with passkey'}
@@ -153,7 +155,7 @@ export function PasskeyModal({ open, target, onClose, onSuccess }: PasskeyModalP
 
         {/* Security explanation */}
         <div className="flex items-start gap-2 rounded-md p-3" style={{ background: 'rgba(2, 132, 199, 0.08)' }}>
-          <ShieldCheck size={14} strokeWidth={2} className="mt-0.5 shrink-0 text-cobalt" aria-hidden="true" />
+          <ShieldCheck size={15} weight="fill" className="mt-0.5 shrink-0 text-cobalt" aria-hidden="true" />
           <p className="text-caption text-text-secondary">
             Your device will prompt for biometric confirmation. The signature is verified against
             your pre-registered public key credential — a stolen password cannot authorize this wire.

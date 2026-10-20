@@ -272,7 +272,29 @@
     background-size: 40px 40px;
   }
 
-  /* ---- Skeleton loading ---- */
+  /* Chat composer: the container carries the focus affordance, not the bare textarea */
+  .composer:focus-within {
+    border-color: rgba(2, 245, 161, 0.28);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 1px 2px rgba(0, 0, 0, 0.3),
+      0 4px 16px rgba(0, 0, 0, 0.25),
+      0 0 0 3px rgba(2, 245, 161, 0.08),
+      0 0 20px rgba(2, 245, 161, 0.10);
+  }
+  /* Suppress the global focus ring on inputs whose parent shows focus-within instead */
+  .focus-plain:focus,
+  .focus-plain:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  /* Circular step index — DESIGN_SYSTEM.md §13 */
+  .step-index {
+    @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-mono text-mono-sm;
+  }
+
+  /* Skeleton loading ---- */
   .skeleton {
     @apply rounded-md;
     background: linear-gradient(

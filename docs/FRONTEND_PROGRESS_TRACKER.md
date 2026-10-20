@@ -36,7 +36,7 @@
 ### Phase 2: Inclusive App Shell, API Client & UX Feedback States — DONE
 - [x] `frontend/src/lib/api.ts` — all 8 route groups typed, structured `ApiError` with 403 fail-closed parsing.
 - [x] `Header.tsx` — fixed 56px, two text-only tabs (Workspace/Ledger), mint accent bar, `Ctrl/Cmd+1|2`.
-- [x] `HealthIndicator.tsx` — Lucide `Radio` signal icon (never a generic dot), 30s polling.
+- [x] `HealthIndicator.tsx` — Phosphor `Broadcast` signal icon (never a generic dot), 30s polling.
 - [x] `ThemeToggle.tsx` — Sun/Moon, `localStorage` key `apexcross-theme`, pre-paint bootstrap in `layout.tsx`.
 - [x] `QuotaBar.tsx` — $50,000 USD annual telemetry with eased fill and ALLOW/WARNING/REJECT states.
 - [x] Skeleton loaders (`MessageSkeleton`, `TableSkeleton`) and button progress states.
@@ -131,7 +131,7 @@ FRONTEND_BYTES         16964
 | Shadows | 3–4 layer stacks + mint/danger glows; never single-layer |
 | Motion | `cubic-bezier(0.22, 1, 0.36, 1)`; hover lift <= 4px; `prefers-reduced-motion` honoured |
 | Navigation | Two text-only tabs, fixed 56px header, `Ctrl/Cmd+1|2`, no breadcrumbs |
-| Health | Lucide `Radio` signal icon — never a generic heartbeat dot |
+| Health | Phosphor `Broadcast` signal icon — never a generic heartbeat dot |
 | Modals | Exactly one `<dialog>` open at a time; 200ms fade between |
 
 ---

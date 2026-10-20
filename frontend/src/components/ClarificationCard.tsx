@@ -1,6 +1,6 @@
 'use client';
 
-import { HelpCircle, Upload } from 'lucide-react';
+import { Question, UploadSimple } from '@/components/icons';
 import { Button } from './ui/Button';
 
 interface ClarificationCardProps {
@@ -36,7 +36,7 @@ export function ClarificationCard({ message, missingFields, onAttachInvoice }: C
           className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md"
           style={{ background: 'rgba(217, 119, 6, 0.12)' }}
         >
-          <HelpCircle size={16} strokeWidth={2} className="text-warning" />
+          <Question size={17} weight="fill" className="text-warning" />
         </span>
 
         <div className="min-w-0 flex-1">
@@ -60,7 +60,7 @@ export function ClarificationCard({ message, missingFields, onAttachInvoice }: C
           <div className="mt-4">
             <Button
               variant="ghost"
-              icon={<Upload size={14} strokeWidth={2} aria-hidden="true" />}
+              icon={<UploadSimple size={15} weight="bold" aria-hidden="true" />}
               onClick={onAttachInvoice}
               data-testid="clarification-upload"
             >

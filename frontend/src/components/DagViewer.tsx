@@ -2,14 +2,14 @@
 
 import { useState } from 'react';
 import {
-  Activity,
-  ChevronDown,
-  ChevronRight,
-  CircleCheck,
+  CaretDown,
+  CaretRight,
+  CheckCircle,
   CircleDashed,
-  CircleX,
-  ShieldAlert,
-} from 'lucide-react';
+  Pulse,
+  ShieldWarning,
+  XCircle,
+} from '@/components/icons';
 import type { DagTask, SecurityTier } from '@/types';
 import { cn, tierShort } from '@/lib/utils';
 import { Badge, type BadgeTone } from './ui/Badge';
@@ -37,35 +37,35 @@ function statusStyle(status: string): StatusStyle {
       return {
         tone: 'success',
         label: 'Completed',
-        icon: <CircleCheck size={12} strokeWidth={2} aria-hidden="true" />,
+        icon: <CheckCircle size={13} weight="fill" aria-hidden="true" />,
         accent: '#059669',
       };
     case 'RUNNING':
       return {
         tone: 'cobalt',
         label: 'Running',
-        icon: <Activity size={12} strokeWidth={2} aria-hidden="true" />,
+        icon: <Pulse size={13} weight="fill" aria-hidden="true" />,
         accent: '#0284C7',
       };
     case 'BLOCKED':
       return {
         tone: 'danger',
         label: 'Blocked',
-        icon: <ShieldAlert size={12} strokeWidth={2} aria-hidden="true" />,
+        icon: <ShieldWarning size={13} weight="fill" aria-hidden="true" />,
         accent: '#DC2626',
       };
     case 'FAILED':
       return {
         tone: 'danger',
         label: 'Failed',
-        icon: <CircleX size={12} strokeWidth={2} aria-hidden="true" />,
+        icon: <XCircle size={13} weight="fill" aria-hidden="true" />,
         accent: '#DC2626',
       };
     default:
       return {
         tone: 'warning',
         label: 'Pending',
-        icon: <CircleDashed size={12} strokeWidth={2} aria-hidden="true" />,
+        icon: <CircleDashed size={13} weight="regular" aria-hidden="true" />,
         accent: '#D97706',
       };
   }
@@ -95,7 +95,7 @@ export function DagViewer({
       {/* Header */}
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <Activity size={15} strokeWidth={1.5} className="text-cobalt" aria-hidden="true" />
+          <Pulse size={16} weight="bold" className="text-cobalt" aria-hidden="true" />
           <h3 className="text-h4 font-semibold uppercase tracking-[0.05em] text-text-primary">
             Execution plan
           </h3>
@@ -123,13 +123,16 @@ export function DagViewer({
               data-testid={`dag-step-${task.task_id}`}
               data-status={task.status}
               className="glass-inline card-sheen relative p-4"
-              style={{ borderLeft: `2px solid ${style.accent}` }}
             >
               <div className="flex items-start gap-3">
                 <span
                   aria-hidden="true"
-                  className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-sm font-mono text-mono-sm"
-                  style={{ background: `${style.accent}22`, color: style.accent }}
+                  className="step-index mt-0.5"
+                  style={{
+                    background: `${style.accent}1F`,
+                    color: style.accent,
+                    border: `1px solid ${style.accent}59`,
+                  }}
                 >
                   {index + 1}
                 </span>
@@ -154,9 +157,9 @@ export function DagViewer({
                       className="mt-2 flex items-center gap-1 text-caption uppercase tracking-[0.05em] text-text-muted transition-colors duration-200 hover:text-mint"
                     >
                       {isOpen ? (
-                        <ChevronDown size={12} strokeWidth={2} aria-hidden="true" />
+                        <CaretDown size={13} weight="bold" aria-hidden="true" />
                       ) : (
-                        <ChevronRight size={12} strokeWidth={2} aria-hidden="true" />
+                        <CaretRight size={13} weight="bold" aria-hidden="true" />
                       )}
                       {isOpen ? 'Hide details' : 'View details'}
                     </button>
@@ -188,7 +191,7 @@ export function DagViewer({
               {!isLast ? (
                 <span
                   aria-hidden="true"
-                  className="absolute -bottom-2 left-[34px] h-2 w-px"
+                  className="absolute -bottom-2 left-[29px] h-2 w-px"
                   style={{ background: 'rgba(255,255,255,0.10)' }}
                 />
               ) : null}

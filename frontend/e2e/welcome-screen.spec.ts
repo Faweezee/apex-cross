@@ -8,7 +8,7 @@ test.describe('Welcome screen & suggestion chips', () => {
 
     const welcome = page.getByTestId('welcome-state');
     await expect(welcome).toBeVisible();
-    await expect(welcome.locator('h1')).toContainText('Cross-border tuition, cleared.');
+    await expect(welcome.locator('h1')).toContainText('Cross-Border Tuition, Cleared.');
     await expect(welcome).toContainText('SAFE annual quota');
   });
 

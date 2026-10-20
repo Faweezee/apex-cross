@@ -73,8 +73,11 @@ export function Header({ view, onViewChange, rightSlot }: HeaderProps) {
           </span>
         </div>
 
-        {/* Tabs */}
-        <nav aria-label="Primary" className="flex h-full items-stretch gap-1">
+        {/* Tabs — optically centred in the header */}
+        <nav
+          aria-label="Primary"
+          className="absolute left-1/2 top-0 flex h-full -translate-x-1/2 items-stretch gap-1"
+        >
           {TABS.map((tab) => {
             const active = view === tab.id;
             return (

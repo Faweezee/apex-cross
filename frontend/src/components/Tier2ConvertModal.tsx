@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRightLeft, Lock } from 'lucide-react';
+import { ArrowsLeftRight, Lock } from '@/components/icons';
 import type { Currency } from '@/types';
 import type { MicroConvertResponse } from '@/lib/api';
 import { formatAmount } from '@/lib/utils';
@@ -75,7 +75,7 @@ export function Tier2ConvertModal({
       testId="tier2-modal"
       title="Confirm micro-conversion"
       subtitle="Tier 2 operation - single-click confirmation, no biometric step-up required."
-      icon={<ArrowRightLeft size={16} strokeWidth={2} className="text-cobalt" />}
+      icon={<ArrowsLeftRight size={18} weight="fill" className="text-cobalt" />}
       footer={
         result ? (
           <div className="flex items-center justify-between gap-3">
@@ -156,7 +156,7 @@ export function Tier2ConvertModal({
           <dl className="space-y-2">
             <div className="flex items-center justify-between gap-2">
               <dt className="flex items-center gap-1.5 text-caption uppercase tracking-[0.05em] text-text-secondary">
-                <Lock size={11} strokeWidth={2} aria-hidden="true" />
+                <Lock size={12} weight="fill" aria-hidden="true" />
                 Locked rate
               </dt>
               <dd className="font-mono text-mono text-text-primary" data-testid="tier2-rate">

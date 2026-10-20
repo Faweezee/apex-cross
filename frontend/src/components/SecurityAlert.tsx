@@ -1,6 +1,6 @@
 'use client';
 
-import { ShieldAlert, X } from 'lucide-react';
+import { ShieldWarning, X } from '@/components/icons';
 import { Button } from './ui/Button';
 
 interface SecurityAlertProps {
@@ -35,7 +35,7 @@ export function SecurityAlert({ reason, onDismiss, onViewLedger }: SecurityAlert
           className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md"
           style={{ background: 'rgba(220, 38, 38, 0.15)' }}
         >
-          <ShieldAlert size={16} strokeWidth={2} className="text-danger" />
+          <ShieldWarning size={17} weight="fill" className="text-danger" />
         </span>
 
         <div className="min-w-0 flex-1">
@@ -70,7 +70,7 @@ export function SecurityAlert({ reason, onDismiss, onViewLedger }: SecurityAlert
           data-testid="security-alert-dismiss"
           className="shrink-0 border-0 px-2 py-1"
         >
-          <X size={14} strokeWidth={2} aria-hidden="true" />
+          <X size={15} weight="bold" aria-hidden="true" />
         </Button>
       </div>
     </div>

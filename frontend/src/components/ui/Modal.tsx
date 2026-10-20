@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef, type ReactNode } from 'react';
-import { X } from 'lucide-react';
+import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
+import { X } from '@/components/icons';
 import { cn } from '@/lib/utils';
 
 interface ModalProps {
@@ -10,6 +10,9 @@ interface ModalProps {
   title: string;
   subtitle?: string;
   icon?: ReactNode;
+  /** Override the icon container geometry (default h-9 w-9 rounded-md mint tint). */
+  iconContainerClassName?: string;
+  iconContainerStyle?: CSSProperties;
   width?: 'modal' | 'receipt';
   children: ReactNode;
   footer?: ReactNode;
@@ -28,6 +31,8 @@ export function Modal({
   title,
   subtitle,
   icon,
+  iconContainerClassName,
+  iconContainerStyle,
   width = 'modal',
   children,
   footer,
@@ -82,10 +87,14 @@ export function Modal({
           {icon ? (
             <span
               aria-hidden="true"
-              className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md"
+              className={cn(
+                'flex shrink-0 items-center justify-center rounded-md',
+                iconContainerClassName ?? 'mt-0.5 h-9 w-9',
+              )}
               style={{
-                background: 'rgba(2, 245, 161, 0.10)',
+                background: iconContainerStyle?.background ?? 'rgba(2, 245, 161, 0.10)',
                 boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)',
+                ...iconContainerStyle,
               }}
             >
               {icon}
@@ -110,7 +119,7 @@ export function Modal({
             data-testid={`${testId ?? 'modal'}-close`}
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-text-muted transition-colors duration-200 hover:text-text-primary disabled:opacity-30"
           >
-            <X size={16} strokeWidth={2} aria-hidden="true" />
+            <X size={17} weight="bold" aria-hidden="true" />
           </button>
         </div>
 

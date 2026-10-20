@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, type ReactNode } from 'react';
-import { Paperclip, SendHorizonal, ShieldCheck, User } from 'lucide-react';
+import { Paperclip, PaperPlaneRight, ShieldCheck, User } from '@/components/icons';
 import type { ChatMessage, SuggestionChip } from '@/types/chat';
 import { cn } from '@/lib/utils';
 import { Badge } from './ui/Badge';
@@ -42,7 +42,7 @@ function UserBubble({ message }: { message: ChatMessage }) {
           className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md"
           style={{ background: 'rgba(2, 132, 199, 0.16)' }}
         >
-          <User size={13} strokeWidth={2} className="text-cobalt" />
+          <User size={14} weight="fill" className="text-cobalt" />
         </span>
       </div>
     </div>
@@ -66,7 +66,7 @@ function AgentBubble({ message, extras }: { message: ChatMessage; extras?: React
           className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md"
           style={{ background: 'rgba(2, 245, 161, 0.12)' }}
         >
-          <ShieldCheck size={13} strokeWidth={2} className="text-mint" />
+          <ShieldCheck size={14} weight="fill" className="text-mint" />
         </span>
 
         <div className="min-w-0 flex-1 space-y-3">
@@ -114,11 +114,14 @@ export function ChatInterface({
     <div className="mx-auto flex w-full max-w-chat flex-col gap-6">
       <div className="flex flex-col gap-5" data-testid="chat-transcript">
         {empty ? (
-          <div className="flex flex-col items-start gap-3 pt-2" data-testid="welcome-state">
-            <h1 className="font-display text-display leading-[1.1] text-text-primary">
-              Cross-border tuition, cleared.
+          <div
+            className="flex flex-col items-center gap-4 pt-2 text-center"
+            data-testid="welcome-state"
+          >
+            <h1 className="font-display text-display capitalize leading-[1.1] text-text-primary">
+              Cross-Border Tuition, Cleared.
             </h1>
-            <p className="max-w-[52ch] text-body text-text-secondary">
+            <p className="max-w-[56ch] text-body text-text-secondary">
               Describe a payment or upload a tuition invoice. ApexCross validates your SAFE annual
               quota, optimizes the APEC FX corridor, and settles the wire under biometric guardrails.
             </p>
@@ -141,7 +144,7 @@ export function ChatInterface({
                 className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md"
                 style={{ background: 'rgba(2, 245, 161, 0.12)' }}
               >
-                <ShieldCheck size={13} strokeWidth={2} className="text-mint" />
+                <ShieldCheck size={14} weight="fill" className="text-mint" />
               </span>
               <MessageSkeleton />
             </div>
@@ -152,7 +155,7 @@ export function ChatInterface({
       </div>
 
       {empty && suggestions.length > 0 ? (
-        <div className="flex flex-wrap gap-2" data-testid="suggestion-chips">
+        <div className="flex flex-wrap justify-center gap-2" data-testid="suggestion-chips">
           {suggestions.map((chip) => (
             <button
               key={chip.label}
@@ -172,7 +175,7 @@ export function ChatInterface({
           event.preventDefault();
           onSubmit();
         }}
-        className="glass-card card-sheen flex items-end gap-2 p-2"
+        className="composer glass-card card-sheen flex items-end gap-2 p-2"
       >
         <button
           type="button"
@@ -181,7 +184,7 @@ export function ChatInterface({
           data-testid="chat-attach"
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md text-text-secondary transition-colors duration-200 hover:text-mint"
         >
-          <Paperclip size={16} strokeWidth={2} aria-hidden="true" />
+          <Paperclip size={17} weight="regular" aria-hidden="true" />
         </button>
 
         <textarea
@@ -199,15 +202,15 @@ export function ChatInterface({
           data-testid="chat-input"
           disabled={disabled}
           className={cn(
-            'max-h-32 min-h-[40px] flex-1 resize-none bg-transparent py-2.5 text-small text-text-primary',
-            'placeholder:text-text-muted focus:outline-none',
+            'focus-plain max-h-32 min-h-[40px] flex-1 resize-none bg-transparent py-2.5 text-small text-text-primary',
+            'placeholder:text-text-muted',
           )}
         />
 
         <Button
           type="submit"
           disabled={disabled || !input.trim()}
-          icon={<SendHorizonal size={15} strokeWidth={2} aria-hidden="true" />}
+          icon={<PaperPlaneRight size={16} weight="fill" aria-hidden="true" />}
           data-testid="chat-send"
           className="shrink-0"
         >

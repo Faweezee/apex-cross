@@ -1,7 +1,7 @@
 # ApexCross (汇护通) — Design System
 
 > **Status:** LOCKED — single source of truth for all frontend visual decisions.
-> **Scope:** Next.js 15 App Router · TypeScript · Tailwind CSS v3.4 · Lucide React
+> **Scope:** Next.js 15 App Router · TypeScript · Tailwind CSS v3.4 · Phosphor Icons
 > **Rule:** Every component references this file. If a value is not here, it does not exist.
 
 ---
@@ -297,7 +297,8 @@ Two views only: **Workspace** (chat) and **Ledger** (audit).
 - **No breadcrumbs.** The app is two levels deep at most. Breadcrumbs would be noise.
 
 ### 8.3 Health Indicator (NOT a heartbeat dot)
-Use the Lucide **`Radio`** icon (concentric signal waves) — thematic for cross-border signal.
+Use the Phosphor **`Broadcast`** icon (concentric signal waves, `weight="fill"`) — thematic
+for cross-border signal.
 
 | State | Visual |
 | :--- | :--- |
@@ -306,7 +307,7 @@ Use the Lucide **`Radio`** icon (concentric signal waves) — thematic for cross
 | Checking | `Radio` in `#D97706`, slow `rotate` (1.5s linear infinite) |
 
 ### 8.4 Theme Toggle
-Single `Sun` / `Moon` Lucide icon. No label. 40x40px hit area, `rounded-full` permitted.
+Single `Sun` / `Moon` Phosphor icon. No label. 40x40px hit area, `rounded-full` permitted.
 Persists to `localStorage` under key `apexcross-theme`.
 
 ---
@@ -315,44 +316,61 @@ Persists to `localStorage` under key `apexcross-theme`.
 
 | Banned | Replacement |
 | :--- | :--- |
+| **Left accent strips** (a vertical bar down the left edge of any card) | A circular step index badge, or a status dot, or a coloured icon chip — never a strip |
 | Purple gradients of any kind | Mint/cobalt accent gradients only |
-| Sparkles, emojis, decorative glyphs | Lucide vector icons, `stroke-width: 1.5–2` |
+| Sparkles, emojis, decorative glyphs | Phosphor vector icons, `weight` tokens per §10 |
 | `border-dashed` (zero instances) | Solid `rgba(255,255,255,0.08)` glass border |
 | Visible gray outlines on cards | Glass border + inset sheen |
 | `<hr>` and dashed separators | `1px` gradient rule fading at both ends |
 | Generic blue focus rings | `ring-2 ring-mint/40 ring-offset-2 ring-offset-abyss` |
-| Generic heartbeat/status dot | Lucide `Radio` signal icon |
+| Focus rings on bare inputs inside a composer | Parent gets `focus-within`; input gets `.focus-plain` |
+| Generic heartbeat/status dot | Phosphor `Broadcast` signal icon |
 | Single-layer flat shadows | Layered 3–4 stop shadows |
-| Heavy UI libraries (MUI, AntD) | Tailwind + Lucide + native HTML5 |
+| Heavy UI libraries (MUI, AntD) | Tailwind + Phosphor + native HTML5 |
 | `rounded-xl` / `rounded-2xl` | `rounded-sm` / `rounded-md` / `rounded-lg` only |
 | Inter, Roboto, system default fonts | Archivo + Abril Fatface + IBM Plex Mono |
+| Fixed-width card internals | Flex-wrap + `min-w-0` + `break-words`/`break-all` on every text node |
 
 ---
 
-## 10. Icon Strategy (Lucide React)
+## 10. Icon Strategy (Phosphor Icons)
 
-| Context | Stroke Width |
-| :--- | :--- |
-| Navigation / decorative | 1.5 |
-| Action buttons | 2 |
-| Status indicators | 2 (or filled variants) |
+**Library:** `@phosphor-icons/react` v2.1.10 (MIT, 1,512 icons, six weight variants).
 
-| Purpose | Icon |
-| :--- | :--- |
-| Security tier / WebAuthn | `ShieldCheck`, `Fingerprint` |
-| Corridor / FX | `ArrowRightLeft`, `TrendingDown` |
-| Invoice upload | `FileSearch`, `Upload` |
-| SWIFT receipt | `ScrollText`, `FileCheck` |
-| Hash chain / audit | `Link2`, `ShieldCheck` |
-| DAG / live status | `Activity`, `CircleCheck`, `CircleDashed` |
-| Quota telemetry | `Gauge` |
-| Health signal | `Radio` |
-| Theme | `Sun`, `Moon` |
-| Recommended corridor | `Zap` |
-| Copy | `Copy`, `Check` |
-| Close / dismiss | `X` |
-| Expand | `ChevronRight`, `ChevronDown` |
-| Language helper | `Languages`, `Info` |
+Chosen over generic stroke-only sets because the weight variants map directly onto the
+emphasis tiers below, and optical sizing is consistent from 12px to 28px.
+
+**Import rule:** always import from `@/components/icons`, never from the package directly.
+Each icon is imported from its own module subpath (`dist/csr/<Name>`) rather than the
+package barrel — the barrel re-exports 1,512 declaration files and makes `tsc` crawl.
+
+| Weight | Usage | Replaces |
+| :--- | :--- | :--- |
+| `light` | Decorative, navigation, metadata, large display marks | `stroke-width: 1.5` |
+| `regular` | Default body and inline icons | `stroke-width: 1.75` |
+| `bold` | Action affordances, primary buttons, emphasis | `stroke-width: 2` |
+| `fill` | Status indicators, active states, badges | filled variants |
+| `duotone` | Large feature marks where two-tone depth helps | — |
+
+| Purpose | Icon | Default weight |
+| :--- | :--- | :--- |
+| Security tier / WebAuthn | `Fingerprint`, `ShieldCheck` | `fill` |
+| Corridor / FX | `ArrowsLeftRight` | `regular` |
+| Savings delta | `TrendDown` | `bold` |
+| Invoice upload | `FileMagnifyingGlass`, `UploadSimple` | `regular` |
+| SWIFT receipt | `SealCheck` | `fill` |
+| Hash chain / audit | `Link`, `ShieldCheck`, `ShieldSlash` | `regular` / `fill` |
+| DAG / live status | `Pulse`, `CheckCircle`, `CircleDashed`, `XCircle` | `bold` / `fill` |
+| Quota telemetry | `Gauge` | `fill` |
+| Health signal | `Broadcast` | `fill` |
+| Theme | `Sun`, `Moon` | `regular` |
+| Recommended corridor | `Lightning` | `fill` |
+| Copy | `Copy`, `Check` | `regular` / `bold` |
+| Close / dismiss | `X` | `bold` |
+| Expand | `CaretDown`, `CaretRight` | `bold` |
+| Language helper | `Question` | `fill` |
+
+**Rule:** no emoji anywhere. Vector icons only.
 
 ---
 

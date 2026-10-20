@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { FileSearch } from 'lucide-react';
+import { FileMagnifyingGlass } from '@/components/icons';
 import type { InvoiceUploadResponse } from '@/lib/api';
 import type { Currency, UniversityInvoice } from '@/types';
 import { Badge, type BadgeTone } from './ui/Badge';
@@ -76,7 +76,7 @@ export function InvoiceModal({ open, result, onClose, onConfirm, submitting = fa
       testId="invoice-modal"
       title="Verify extracted invoice"
       subtitle={result?.filename ? `Parsed from ${result.filename}` : undefined}
-      icon={<FileSearch size={16} strokeWidth={2} className="text-mint" />}
+      icon={<FileMagnifyingGlass size={17} weight="regular" className="text-mint" />}
       footer={
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">

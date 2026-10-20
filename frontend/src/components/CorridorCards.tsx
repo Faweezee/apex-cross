@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRightLeft, Check, TrendingDown, Zap } from 'lucide-react';
+import { ArrowsLeftRight, Check, Lightning, TrendDown } from '@/components/icons';
 import type { RemittanceRoute } from '@/types';
 import { cn, formatAmount } from '@/lib/utils';
 import { Badge } from './ui/Badge';
@@ -28,7 +28,7 @@ export function CorridorCards({
   if (routes.length === 0) return null;
 
   return (
-    <div className="grid w-full gap-4 md:grid-cols-3" data-testid="corridor-cards">
+    <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" data-testid="corridor-cards">
       {routes.map((route) => {
         const recommended = route.is_recommended;
         const selected = selectedRail === route.rail_name;
@@ -39,7 +39,7 @@ export function CorridorCards({
             data-recommended={recommended}
             data-selected={selected}
             className={cn(
-              'glass-card card-sheen lift flex flex-col gap-4 p-6',
+              'glass-card card-sheen lift flex min-w-0 flex-col gap-4 p-5 sm:p-6',
               (recommended || selected) && 'border-mint/30',
             )}
             style={
@@ -49,68 +49,70 @@ export function CorridorCards({
             }
           >
             {/* Header */}
-            <div className="flex items-start justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <ArrowRightLeft size={15} strokeWidth={1.5} className="shrink-0 text-text-secondary" />
-                <h3 className="text-h4 font-semibold leading-snug text-text-primary">
+            <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
+              <div className="flex min-w-0 flex-1 items-center gap-2">
+                <ArrowsLeftRight size={16} weight="regular" className="shrink-0 text-text-secondary" />
+                <h3 className="min-w-0 break-words text-h4 font-semibold leading-snug text-text-primary">
                   {route.rail_name}
                 </h3>
               </div>
               {recommended ? (
-                <Badge tone="mint" animate icon={<Zap size={11} strokeWidth={2} />}>
+                <Badge tone="mint" animate icon={<Lightning size={12} weight="fill" />} className="shrink-0">
                   Recommended
                 </Badge>
               ) : null}
             </div>
 
             {/* Amount conversion block */}
-            <div className="glass-inline flex flex-col gap-1.5 p-3">
-              <div className="flex items-center justify-between gap-2 font-mono text-mono">
-                <span className="text-text-secondary">
+            <div className="glass-inline flex min-w-0 flex-col gap-1.5 p-3">
+              <div className="flex min-w-0 flex-wrap items-baseline justify-between gap-x-2 gap-y-1 font-mono text-mono">
+                <span className="min-w-0 break-all text-text-secondary">
                   {route.source_currency} {formatAmount(route.source_amount)}
                 </span>
-                <span aria-hidden="true" className="text-text-muted">
+                <span aria-hidden="true" className="shrink-0 text-text-muted">
                   &rarr;
                 </span>
-                <span className="font-medium text-text-primary">
+                <span className="min-w-0 break-all font-medium text-text-primary">
                   {route.target_currency} {formatAmount(route.target_amount)}
                 </span>
               </div>
-              <p className="font-mono text-mono-sm text-text-muted">
+              <p className="break-all font-mono text-mono-sm text-text-muted">
                 1 {route.source_currency} = {route.exchange_rate.toFixed(4)} {route.target_currency}
               </p>
             </div>
 
             {/* Telemetry */}
-            <dl className="flex flex-col gap-2">
-              <div className="flex items-center justify-between gap-2">
-                <dt className="text-caption uppercase tracking-[0.05em] text-text-secondary">Fee</dt>
-                <dd className="font-mono text-mono text-text-primary">
+            <dl className="flex min-w-0 flex-col gap-2">
+              <div className="flex min-w-0 items-baseline justify-between gap-2">
+                <dt className="shrink-0 text-caption uppercase tracking-[0.05em] text-text-secondary">
+                  Fee
+                </dt>
+                <dd className="min-w-0 break-all text-right font-mono text-mono text-text-primary">
                   ${formatAmount(route.total_fee_usd)} USD
                 </dd>
               </div>
-              <div className="flex items-center justify-between gap-2">
-                <dt className="text-caption uppercase tracking-[0.05em] text-text-secondary">
+              <div className="flex min-w-0 items-baseline justify-between gap-2">
+                <dt className="shrink-0 text-caption uppercase tracking-[0.05em] text-text-secondary">
                   Arrival
                 </dt>
-                <dd className="font-mono text-mono text-text-primary">
+                <dd className="min-w-0 break-all text-right font-mono text-mono text-text-primary">
                   {route.estimated_arrival_hours} hours
                 </dd>
               </div>
-              <div className="flex items-center justify-between gap-2">
-                <dt className="text-caption uppercase tracking-[0.05em] text-text-secondary">
+              <div className="flex min-w-0 items-baseline justify-between gap-2">
+                <dt className="shrink-0 text-caption uppercase tracking-[0.05em] text-text-secondary">
                   Savings
                 </dt>
                 <dd
                   className={cn(
-                    'flex items-center gap-1 font-mono text-mono',
+                    'flex min-w-0 items-center justify-end gap-1 text-right font-mono text-mono',
                     route.savings_vs_standard_usd > 0 ? 'text-mint' : 'text-text-muted',
                   )}
                 >
                   {route.savings_vs_standard_usd > 0 ? (
-                    <TrendingDown size={12} strokeWidth={2} aria-hidden="true" />
+                    <TrendDown size={13} weight="bold" aria-hidden="true" className="shrink-0" />
                   ) : null}
-                  ${formatAmount(route.savings_vs_standard_usd)} USD
+                  <span className="break-all">${formatAmount(route.savings_vs_standard_usd)} USD</span>
                 </dd>
               </div>
             </dl>
@@ -120,7 +122,7 @@ export function CorridorCards({
               <Button
                 variant={recommended ? 'accent' : 'ghost'}
                 className="mt-auto w-full"
-                icon={selected ? <Check size={14} strokeWidth={2} aria-hidden="true" /> : undefined}
+                icon={selected ? <Check size={15} weight="bold" aria-hidden="true" /> : undefined}
                 onClick={() => onSelect(route)}
                 data-testid={`corridor-select-${route.rail_name.replace(/\s+/g, '-').toLowerCase()}`}
               >

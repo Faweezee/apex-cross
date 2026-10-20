@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Link2, RefreshCw, Search, ShieldCheck, ShieldX } from 'lucide-react';
+import { ArrowsClockwise, Link, MagnifyingGlass, ShieldCheck, ShieldSlash } from '@/components/icons';
 import {
   getAuditLogs,
   getAuditVerify,
@@ -118,9 +118,9 @@ export function AuditTable() {
             style={{ background: isValid ? 'rgba(5,150,105,0.12)' : 'rgba(220,38,38,0.12)' }}
           >
             {isValid ? (
-              <ShieldCheck size={17} strokeWidth={2} className="text-success" />
+              <ShieldCheck size={18} weight="fill" className="text-success" />
             ) : (
-              <ShieldX size={17} strokeWidth={2} className="text-danger" />
+              <ShieldSlash size={18} weight="fill" className="text-danger" />
             )}
           </span>
           <div>
@@ -156,7 +156,7 @@ export function AuditTable() {
             variant="ghost"
             onClick={verifyChain}
             loading={verifying}
-            icon={<RefreshCw size={14} strokeWidth={2} aria-hidden="true" />}
+            icon={<ArrowsClockwise size={15} weight="bold" aria-hidden="true" />}
             data-testid="chain-verify-button"
           >
             Verify chain
@@ -166,7 +166,7 @@ export function AuditTable() {
 
       <div className="flex flex-wrap items-center gap-3">
         <label className="glass-inline flex items-center gap-2 px-3 py-2">
-          <Search size={13} strokeWidth={1.5} className="text-text-muted" aria-hidden="true" />
+          <MagnifyingGlass size={14} weight="regular" className="text-text-muted" aria-hidden="true" />
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
@@ -239,7 +239,7 @@ export function AuditTable() {
 
                 <div className="mt-3 flex flex-wrap items-center gap-2">
                   <span className="glass-inline flex items-center gap-1 px-2 py-1 font-mono text-mono-sm text-text-muted">
-                    <Link2 size={11} strokeWidth={1.5} aria-hidden="true" />
+                    <Link size={12} weight="regular" aria-hidden="true" />
                     {truncateHash(record.previous_hash, 8, 6)}
                   </span>
                   <span aria-hidden="true" className="text-text-muted">

@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Radio } from 'lucide-react';
+import { Broadcast } from '@/components/icons';
 import { getHealth } from '@/lib/api';
 import { cn } from '@/lib/utils';
 
@@ -21,7 +21,7 @@ const STATE_STYLE: Record<HealthState, { color: string; label: string; iconClass
 
 /**
  * Live backend health indicator — DESIGN_SYSTEM.md §8.3.
- * Uses the Lucide `Radio` signal icon (never a generic heartbeat dot).
+ * Uses the Phosphor `Broadcast` signal icon (never a generic heartbeat dot).
  * Polls `GET /api/health` on an interval and surfaces connect/offline/checking states.
  */
 export function HealthIndicator({ intervalMs = 30000, className }: HealthIndicatorProps) {
@@ -62,10 +62,10 @@ export function HealthIndicator({ intervalMs = 30000, className }: HealthIndicat
       className={cn('glass-inline flex items-center gap-2 px-2.5 py-1.5', className)}
       title={`Backend status: ${style.label}`}
     >
-      <Radio
+      <Broadcast
         aria-hidden="true"
-        size={14}
-        strokeWidth={2}
+        size={15}
+        weight="fill"
         className={style.iconClass}
         style={{ color: style.color }}
       />

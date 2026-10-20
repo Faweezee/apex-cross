@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useRef, useState } from 'react';
-import { FileSearch, Upload, X } from 'lucide-react';
+import { FileMagnifyingGlass, UploadSimple, X } from '@/components/icons';
 import { uploadInvoice, ApiError, type InvoiceUploadResponse } from '@/lib/api';
 import { cn } from '@/lib/utils';
 import { Button } from './ui/Button';
@@ -67,7 +67,7 @@ export function InvoiceDropzone({ onExtracted, onError, onCancel }: InvoiceDropz
             className="flex h-8 w-8 items-center justify-center rounded-md"
             style={{ background: 'rgba(2, 245, 161, 0.12)' }}
           >
-            <FileSearch size={16} strokeWidth={2} className="text-mint" />
+            <FileMagnifyingGlass size={17} weight="regular" className="text-mint" />
           </span>
           <div className="min-w-0">
             <p className="text-small font-medium text-text-primary">Extracting invoice fields</p>
@@ -112,7 +112,7 @@ export function InvoiceDropzone({ onExtracted, onError, onCancel }: InvoiceDropz
             boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)',
           }}
         >
-          <Upload size={20} strokeWidth={1.5} className="text-mint" />
+          <UploadSimple size={22} weight="light" className="text-mint" />
         </span>
 
         <div>
@@ -124,7 +124,7 @@ export function InvoiceDropzone({ onExtracted, onError, onCancel }: InvoiceDropz
 
         <div className="mt-1 flex items-center gap-2">
           <Button
-            icon={<FileSearch size={14} strokeWidth={2} aria-hidden="true" />}
+            icon={<FileMagnifyingGlass size={15} weight="bold" aria-hidden="true" />}
             onClick={() => inputRef.current?.click()}
             data-testid="invoice-browse"
           >
@@ -133,7 +133,7 @@ export function InvoiceDropzone({ onExtracted, onError, onCancel }: InvoiceDropz
           {onCancel ? (
             <Button
               variant="ghost"
-              icon={<X size={14} strokeWidth={2} aria-hidden="true" />}
+              icon={<X size={15} weight="bold" aria-hidden="true" />}
               onClick={onCancel}
               data-testid="invoice-cancel"
             >

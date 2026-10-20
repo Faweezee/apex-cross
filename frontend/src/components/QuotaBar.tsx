@@ -1,6 +1,6 @@
 'use client';
 
-import { Gauge } from 'lucide-react';
+import { Gauge } from '@/components/icons';
 import { cn, formatAmount, quotaPercentage } from '@/lib/utils';
 
 export const ANNUAL_QUOTA_USD = 50000;
@@ -55,7 +55,7 @@ export function QuotaBar({ remainingUsd, decision, compact = false, className }:
     >
       <div className="flex items-center justify-between gap-3">
         <span className="flex items-center gap-1.5 text-caption font-medium uppercase tracking-[0.05em] text-text-secondary">
-          <Gauge size={13} strokeWidth={1.5} aria-hidden="true" />
+          <Gauge size={14} weight="fill" aria-hidden="true" />
           Annual FX Quota
         </span>
         <span
