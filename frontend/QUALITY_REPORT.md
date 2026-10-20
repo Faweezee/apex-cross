@@ -5,7 +5,7 @@ Maintained by Antigravity (QA). Branch: `feat/frontend-mvp`.
 ## Progress
 
 | Task | Status | Commit |
-| :--- | :--- | :--- |
+| :--- | :--- | :--- |ZAq   A
 | D: Static assets | Done | `ef3b26a` chore(assets): add svg patterns, noise texture, and favicons |
 | A: Mock fixtures | Done | `4c63f26` / `32e6eca` chore(mocks): create api mock fixtures for all 8 endpoints |
 | C: Vitest config and unit tests | Done (53/53 passing) | `eba8698` test(unit): add vitest config and utility/api unit tests |
@@ -55,5 +55,21 @@ None. All required `data-testid` attributes are exposed across Cline's component
 
 ## Mock vs API Alignment Notes
 
-- `mockFirewallBlockedResponse()` in `src/lib/__mocks__/agent.ts` returns `{ status: 403, body: { status: 'BLOCKED', error: 'SecurityException', reason } }` so `isSecurityPayload()` in `src/lib/api.ts` classifies it as `ApiError` with `kind === 'security'`.
-- `mockAuditRecords()` in `src/lib/__mocks__/audit.ts` uses `TIER2_MICRO_CONVERT`, `TIER3_WIRE_SETTLED`, and `SECURITY_EXCEPTION_BLOCKED` action types matching `ACTION_FILTERS` in `src/components/AuditTable.tsx`.
+- `mockFirewallBlockedResponse()` in `tests/fixtures/agent.ts` returns `{ status: 403, body: { status: 'BLOCKED', error: 'SecurityException', reason } }` so `isSecurityPayload()` in `src/lib/api.ts` classifies it as `ApiError` with `kind === 'security'`.
+- `mockAuditRecords()` in `tests/fixtures/audit.ts` uses `TIER2_MICRO_CONVERT`, `TIER3_WIRE_SETTLED`, and `SECURITY_EXCEPTION_BLOCKED` action types matching `ACTION_FILTERS` in `src/components/AuditTable.tsx`.
+
+## Test Tree Layout
+
+Consolidated under a single `frontend/tests/` root after completion:
+
+| Path | Contents |
+| :--- | :--- |
+| `tests/fixtures/` | API response factories (moved out of `src/lib/__mocks__`) |
+| `tests/unit/` | Vitest specs (`api`, `utils`, `fixtures`) |
+| `tests/e2e/support/` | Shared Playwright helpers (`mockBackend`, `openApp`, WebAuthn stub) |
+| `tests/e2e/shell/` | App chrome & onboarding specs |
+| `tests/e2e/components/` | One spec per interactive surface |
+| `tests/e2e/flows/` | Multi-step user journeys |
+| `tests/e2e/security/` | Adversarial & fail-closed behaviour |
+
+See `frontend/tests/README.md` for the authoritative map.

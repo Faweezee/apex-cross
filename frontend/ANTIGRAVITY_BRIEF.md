@@ -9,11 +9,16 @@
 
 ## 1. FILE BOUNDARIES — STRICTLY ENFORCED
 
+> **Structure note (post-completion cleanup):** the test tree was consolidated under a
+> single `frontend/tests/` root and the API fixtures moved out of `src/` so production
+> code no longer contains test-only modules. Current layout:
+> `tests/fixtures/` · `tests/unit/` · `tests/e2e/{support,shell,components,flows,security}/`.
+> See `frontend/tests/README.md` for the full map.
+
 ### YOUR domain (you own these files):
 ```
-frontend/e2e/**                        # Playwright E2E tests
-frontend/tests/**                      # Vitest unit tests
-frontend/src/lib/__mocks__/**          # API mock fixtures & response factories
+frontend/tests/**                      # ALL tests (unit + e2e) and shared fixtures
+frontend/tests/fixtures/**             # API response factories (was src/lib/__mocks__)
 frontend/src/assets/**                 # SVG patterns, noise textures, static images
 frontend/public/**                     # Fonts, favicons, og:image metadata images
 frontend/playwright.config.ts          # Playwright configuration
@@ -42,7 +47,7 @@ frontend/DESIGN_SYSTEM.md              # Design system documentation
 
 ## 2. YOUR TASKS (Execute in Order)
 
-### TASK A: API Mock Fixtures (`frontend/src/lib/__mocks__/`)
+### TASK A: API Mock Fixtures (`frontend/tests/fixtures/`)
 
 Create realistic mock response factories for every backend endpoint. These will be used by
 both E2E tests and unit tests. Cline's components will also use them during development
@@ -336,9 +341,7 @@ Cline creates this branch. You do NOT create any branches.
 ### Commit Rules
 1. **Stage ONLY your files.** Never use `git add .` or `git add -A`. Always:
    ```bash
-   git add frontend/e2e/
    git add frontend/tests/
-   git add frontend/src/lib/__mocks__/
    git add frontend/src/assets/
    git add frontend/public/
    git add frontend/playwright.config.ts

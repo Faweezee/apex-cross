@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { mockClarificationResponse, mockPlanReadyResponse } from '../src/lib/__mocks__';
-import { mockBackend, openApp, sendMessage, WIRE_PROMPT } from './helpers';
+import { mockClarificationResponse, mockPlanReadyResponse } from '../../fixtures';
+import { mockBackend, openApp, sendMessage, WIRE_PROMPT } from '../support/helpers';
 
 test.describe('Chat flow', () => {
   test('submits message, shows typing skeleton, clears input, and renders agent turn', async ({

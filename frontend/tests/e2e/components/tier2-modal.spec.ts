@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { mockMicroConvertSlippageError, mockTier2PlanResponse } from '../src/lib/__mocks__';
-import { mockBackend, openApp, sendMessage } from './helpers';
+import { mockMicroConvertSlippageError, mockTier2PlanResponse } from '../../fixtures';
+import { mockBackend, openApp, sendMessage } from '../support/helpers';
 
 test.describe('Tier 2 micro-conversion modal', () => {
   test('displays rate, fee, slippage, and wallet balances, confirms conversion, and shows success receipt', async ({

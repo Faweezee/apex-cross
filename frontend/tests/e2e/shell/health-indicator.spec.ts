@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { mockBackend, openApp } from './helpers';
+import { mockBackend, openApp } from '../support/helpers';
 
 test.describe('Health indicator', () => {
   test('renders connected state in mint (#02F5A1) when backend is healthy', async ({ page }) => {

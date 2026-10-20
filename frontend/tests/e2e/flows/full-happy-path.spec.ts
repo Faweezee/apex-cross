@@ -6,7 +6,7 @@ import {
   openLedger,
   RAILS,
   requestPlan,
-} from './helpers';
+} from '../support/helpers';
 
 test.describe('Full end-to-end happy path', () => {
   test('wire request -> 4-step DAG -> 3 corridors -> passkey step-up -> SWIFT receipt -> audit ledger record', async ({

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import * as mocks from '@/lib/__mocks__';
-import type { AgentChatResponse } from '@/lib/__mocks__';
+import * as mocks from '../fixtures';
+import type { AgentChatResponse } from '../fixtures';
 
 const CURRENCIES = ['USD', 'CNY', 'HKD', 'AUD', 'SGD'];
 const TIERS = ['TIER_1_AUTONOMOUS', 'TIER_2_CONFIRMATION', 'TIER_3_BIOMETRIC'];

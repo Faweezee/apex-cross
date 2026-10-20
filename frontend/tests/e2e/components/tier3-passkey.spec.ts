@@ -1,12 +1,12 @@
 import { expect, test } from '@playwright/test';
-import { mockVerifyFailureResponse } from '../src/lib/__mocks__';
+import { mockVerifyFailureResponse } from '../../fixtures';
 import {
   installWebAuthnStub,
   mockBackend,
   openApp,
   requestPlan,
   webauthnCallCount,
-} from './helpers';
+} from '../support/helpers';
 
 test.describe('Tier 3 passkey authorization modal', () => {
   test('shows wire summary and Tier 3 badge, triggers WebAuthn on Authenticate, and transitions to receipt', async ({

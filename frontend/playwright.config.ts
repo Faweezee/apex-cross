@@ -7,7 +7,7 @@ import { defineConfig, devices } from '@playwright/test';
  * automatically, or reuse a server that is already listening on port 3000.
  */
 export default defineConfig({
-  testDir: './e2e',
+  testDir: './tests/e2e',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,

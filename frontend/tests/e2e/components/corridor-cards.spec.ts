@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { mockBackend, openApp, RAILS, requestPlan } from './helpers';
+import { mockBackend, openApp, RAILS, requestPlan } from '../support/helpers';
 
 test.describe('Corridor cards', () => {
   test('renders 3 corridor cards, highlights recommended route, shows telemetry, and allows route selection', async ({

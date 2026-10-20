@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { mockQuotaExceededResponse } from '../src/lib/__mocks__';
-import { mockBackend, openApp, requestPlan, sendMessage } from './helpers';
+import { mockQuotaExceededResponse } from '../../fixtures';
+import { mockBackend, openApp, requestPlan, sendMessage } from '../support/helpers';
 
 test.describe('DAG visualizer', () => {
   test('renders 4 steps with status badges, expands step details, and shows Execute on Step 4', async ({

@@ -6,7 +6,7 @@ import {
   openApp,
   sendMessage,
   WIRE_PROMPT,
-} from './helpers';
+} from '../support/helpers';
 
 test.describe('Pre-agent security firewall', () => {
   test('blocks adversarial prompt with crimson alert banner, allows dismissal, and permits normal prompts after', async ({

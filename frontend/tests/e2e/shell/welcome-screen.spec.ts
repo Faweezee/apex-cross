@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { mockBackend, openApp } from './helpers';
+import { mockBackend, openApp } from '../support/helpers';
 
 test.describe('Welcome screen & suggestion chips', () => {
   test('renders welcome headline and description on empty transcript', async ({ page }) => {

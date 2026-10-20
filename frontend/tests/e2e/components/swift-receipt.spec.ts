@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { installWebAuthnStub, mockBackend, openApp, requestPlan } from './helpers';
+import { installWebAuthnStub, mockBackend, openApp, requestPlan } from '../support/helpers';
 
 test.describe('SWIFT MT103 settlement receipt', () => {
   test('displays SETTLED badge, monospace MT103 message, 64-char SHA-256 hash, and working copy buttons', async ({

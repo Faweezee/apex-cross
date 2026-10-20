@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { mockInvoiceUploadResponse } from '../src/lib/__mocks__';
-import { mockBackend, openApp } from './helpers';
+import { mockInvoiceUploadResponse } from '../../fixtures';
+import { mockBackend, openApp } from '../support/helpers';
 
 test.describe('Invoice upload & OCR verification modal', () => {
   test('accepts file in dropzone, shows loading state, opens editable modal, and compiles plan on confirm', async ({

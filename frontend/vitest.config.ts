@@ -5,8 +5,8 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
-    include: ['tests/**/*.test.{ts,tsx}'],
-    exclude: ['node_modules', 'e2e', '.next'],
+    include: ['tests/unit/**/*.test.{ts,tsx}'],
+    exclude: ['node_modules', 'tests/e2e', '.next'],
     clearMocks: true,
     restoreMocks: true,
   },

@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { mockBackend, openApp } from './helpers';
+import { mockBackend, openApp } from '../support/helpers';
 
 test.describe('Theme toggle', () => {
   test('toggles between dark and light theme and persists across page reload in localStorage', async ({

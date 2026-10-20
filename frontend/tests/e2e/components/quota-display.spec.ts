@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
-import { mockQuotaWarningResponse } from '../src/lib/__mocks__';
-import { mockBackend, openApp, requestPlan, sendMessage } from './helpers';
+import { mockQuotaWarningResponse } from '../../fixtures';
+import { mockBackend, openApp, requestPlan, sendMessage } from '../support/helpers';
 
 test.describe('Annual SAFE FX quota display', () => {
   test('shows initial $50,000 USD allowance with 0% bar fill, then updates to 17% after plan compilation', async ({

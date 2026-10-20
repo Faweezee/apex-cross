@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { mockBackend, openApp, openLedger } from './helpers';
+import { mockBackend, openApp, openLedger } from '../support/helpers';
 
 test.describe('Audit ledger & SHA-256 hash chain', () => {
   test('renders chain verified banner, 5 chained records, supports Verify chain and action filter', async ({

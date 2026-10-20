@@ -25,7 +25,7 @@ import {
   mockReauthOptions,
   mockVerifyFailureResponse,
   mockVerifySuccessResponse,
-} from '@/lib/__mocks__';
+} from '../fixtures';
 
 type FetchMock = ReturnType<typeof vi.fn>;
 
