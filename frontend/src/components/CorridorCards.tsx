@@ -48,19 +48,27 @@ export function CorridorCards({
                 : undefined
             }
           >
-            {/* Header */}
-            <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
-              <div className="flex min-w-0 flex-1 items-center gap-2">
-                <ArrowsLeftRight size={16} weight="regular" className="shrink-0 text-text-secondary" />
-                <h3 className="min-w-0 break-words text-h4 font-semibold leading-snug text-text-primary">
-                  {route.rail_name}
-                </h3>
-              </div>
+            {/* Status row — height reserved on every card so all three grids align.
+                The badge sits ABOVE the title, never beside it: placing it inline
+                squeezed long rail names into a one-character-wide column. */}
+            <div className="flex min-h-[22px] items-center">
               {recommended ? (
-                <Badge tone="mint" animate icon={<Lightning size={12} weight="fill" />} className="shrink-0">
+                <Badge tone="mint" animate icon={<Lightning size={12} weight="fill" />}>
                   Recommended
                 </Badge>
               ) : null}
+            </div>
+
+            {/* Title */}
+            <div className="flex min-w-0 items-start gap-2">
+              <ArrowsLeftRight
+                size={16}
+                weight="regular"
+                className="mt-1 shrink-0 text-text-secondary"
+              />
+              <h3 className="min-w-0 break-words text-h4 font-semibold leading-snug text-text-primary">
+                {route.rail_name}
+              </h3>
             </div>
 
             {/* Amount conversion block */}

@@ -317,6 +317,7 @@ Persists to `localStorage` under key `apexcross-theme`.
 | Banned | Replacement |
 | :--- | :--- |
 | **Left accent strips** (a vertical bar down the left edge of any card) | A circular step index badge, or a status dot, or a coloured icon chip — never a strip |
+| **A status badge sharing a row with a title** | Badge on its own row above the title, with that row's height reserved on every card in the grid |
 | Purple gradients of any kind | Mint/cobalt accent gradients only |
 | Sparkles, emojis, decorative glyphs | Phosphor vector icons, `weight` tokens per §10 |
 | `border-dashed` (zero instances) | Solid `rgba(255,255,255,0.08)` glass border |
@@ -420,7 +421,9 @@ Chat Canvas (always the base layer)
 ### 13.1 Corridor Card
 ```
 +-------------------------------------------------+  radius 12px, Tier 1 glass
-|  APEC Direct Clearing            * RECOMMENDED  |  h3 Archivo 600 + mint badge
+|  [ * RECOMMENDED ]                               |  status row — height reserved
+|                                                  |  on ALL cards for grid alignment
+|  <>  APEC Direct Clearing                        |  h3 Archivo 600, wraps at words
 |                                                   |
 |  +-------------------------------------------+   |  radius 8px, Tier 3 glass
 |  |  CNY 77,812.50  -->  HKD 85,000.00        |   |  IBM Plex Mono tabular
@@ -437,6 +440,16 @@ Chat Canvas (always the base layer)
 +-------------------------------------------------+
         hover: translateY(-2px) + mint border + glow
 ```
+
+**Layout rules for this card (apply to every multi-card comparison grid):**
+1. **A status badge NEVER shares a row with a title.** It sits on its own row above.
+   Putting it inline lets `min-w-0` shrink the title below its min-content width, which
+   breaks a long rail name into a one-character-wide column.
+2. **Reserve the badge row height on every card** (`min-h-[22px]`) even when empty, so
+   all cards in the grid share identical internal alignment.
+3. Every text node carries `min-w-0` plus `break-words` (prose) or `break-all` (figures).
+4. Labels carry `shrink-0`; values carry `min-w-0` and right alignment.
+5. Grid columns: `grid-cols-1` -> `sm:grid-cols-2` -> `lg:grid-cols-3`.
 
 ### 13.2 Status Badge
 ```
