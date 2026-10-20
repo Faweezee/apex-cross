@@ -18,7 +18,7 @@
 | Layer | Technology | Version / Specifics | Rationale |
 | :--- | :--- | :--- | :--- |
 | **Frontend Framework** | Next.js | 15.x (App Router, TypeScript) | Blazing fast, React Server Components, clean API routes. |
-| **Styling & Icons** | Tailwind CSS + Lucide React | v3.4+ / standard icons | Rapid UI scaffolding, zero bundle bloat. |
+| **Styling & Icons** | Tailwind CSS + Phosphor Icons | v3.4+ / `@phosphor-icons/react` v2 | Rapid UI scaffolding, six icon weights, zero bundle bloat via per-icon imports. |
 | **Native Modals** | HTML5 `<dialog>` + Popovers | Modern Web Baseline | Accessible, native top-layer focus management without third-party dialog weight. |
 | **Biometric Auth** | WebAuthn / FIDO2 | `@simplewebauthn/browser` (v10+) | Hardware-backed biometric confirmation (Touch ID / Face ID / Windows Hello). |
 | **Backend Framework** | FastAPI | 0.115+ (Python 3.11+) | Async performance, native Pydantic v2 validation, OpenAPI docs. |
@@ -109,5 +109,5 @@ Do NOT re-propose or implement any of the following rejected concepts:
 | **Direction F (Autonomous Web3 Agent Wallet)** | On-chain gas fees, faucet dependencies, private key custody risks, and testnet RPC rate limits make live demos extremely fragile in 24 hours. | Do not make real blockchain smart contracts or on-chain crypto wallet keys a mandatory dependency for the core flow. |
 | **LLM Floating-Point Arithmetic** | Large language models regularly hallucinate decimals, currency conversions, and fee sums. | Never allow an LLM prompt to compute totals. Always invoke deterministic Python tools (`fx_calculator.py`). |
 | **Mocking Security via Simple 'OK' Buttons** | The rubric allocates 30% to Security & Compliance and heavily penalizes superficial guardrails. | All Tier 3 transfers must trigger real WebAuthn biometric challenges via browser APIs. |
-| **Heavy UI Component Libraries (e.g., MUI, AntD)** | Inflate bundle size, complicate styling overrides, and introduce hydration bugs during 24h rapid builds. | Rely strictly on Tailwind CSS, Lucide icons, and native HTML5 elements. |
+| **Heavy UI Component Libraries (e.g., MUI, AntD)** | Inflate bundle size, complicate styling overrides, and introduce hydration bugs during 24h rapid builds. | Rely strictly on Tailwind CSS, Phosphor icons, and native HTML5 elements. |
 | **Unbounded Autonomous Agent Loops** | Pure ReAct loops can get trapped in recursive tool-calling cycles during a live presentation. | All plans must compile to a deterministic, acyclic Directed Acyclic Graph (DAG) with finite retry limits. |

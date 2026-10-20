@@ -9,7 +9,7 @@
 * **Input Context:** `AGENT_BOOTSTRAP.md`, `CONTEXT_AND_ARCHITECTURE.md`
 * **Tasks:**
   - [x] Initialize Python backend with `pyproject.toml` / `requirements.txt` (`fastapi`, `uvicorn`, `langgraph`, `litellm`, `pydantic`, `py_webauthn`, `pytest`).
-  - [ ] Initialize Next.js 15 frontend with TypeScript, Tailwind CSS, and Lucide React.
+  - [x] Initialize Next.js 15 frontend with TypeScript, Tailwind CSS, and Phosphor Icons.
   - [x] Setup CORS middleware and healthcheck endpoint (`GET /api/health`).
   - [x] Verify directory structure matches `CONTEXT_AND_ARCHITECTURE.md`.
 * **Definition of Done:**
